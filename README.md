@@ -1,68 +1,151 @@
-# shelzyperkins
-Personal website for shelzyperkins.com
+# ShelzyPerkins.com
 
-## WordPress Content
+**Your go-to guide for smart shopping, money-saving tips, and the best deals on products you'll actually love.**
 
-This repository contains WordPress Gutenberg block content for shelzyperkins.com.
+**Domain:** shelzyperkins.com
+**Niche:** Deals, savings, Amazon affiliate recommendations, money-saving guides
+**Affiliate Tag:** `shelzysdesigns-20`
 
-### Black Friday / Cyber Monday Content
+---
 
-Located in `wordpress-content/`:
+## What's Been Built
 
-#### Blog Post: `black-friday-blog-post.html`
-- **Title:** Black Friday + Cyber Monday Gift Guide: Custom Name Water Bottles (Limited Holiday Deals!)
-- **Slug:** `black-friday-cyber-monday-gift-guide-water-bottles`
-- **Categories:** Holiday Gift Guides, Black Friday, Cyber Monday, Personalized Gifts
+### Live Site Content
 
-#### Landing Page: `holiday-deal-landing-page.html`
-- **Title:** Holiday Deal: Custom Name Water Bottles (Black Friday + Cyber Monday)
-- **Slug:** `holiday-water-bottle-deal`
-- **Template:** Full Width / Landing Page
+#### Pages (10+ pages)
+| Page | URL |
+|------|-----|
+| Homepage | https://shelzyperkins.com/ |
+| Shop Amazon | https://shelzyperkins.com/shop/ |
+| Deals | https://shelzyperkins.com/deals/ |
+| Best-of Lists | https://shelzyperkins.com/best-of/ |
+| Budget Hacks | https://shelzyperkins.com/budget-hacks/ |
+| Beauty Deals | https://shelzyperkins.com/beauty-deals/ |
+| Home & Kitchen | https://shelzyperkins.com/home-kitchen-deals/ |
+| Fashion Deals | https://shelzyperkins.com/fashion-deals/ |
+| Tech & Travel | https://shelzyperkins.com/tech-travel-deals/ |
+| Gift Guides | https://shelzyperkins.com/gift-guides/ |
+| About | https://shelzyperkins.com/about-shelzy/ |
 
-### How to Use
+#### Blog Posts (70+ published)
+- **Pillar Content:** Best Amazon Beauty Dupes, Home Organization Finds, Travel Essentials, Kitchen Upgrades, Tech Under $50
+- **Deals Posts:** Daily deals, Lightning deals, Category-specific deals
+- **Gift Guides:** Holiday Guide, Valentine's Day, Mother's Day, Father's Day, Gifts for Her/Him, Stocking Stuffers
+- **Quick Picks:** TikTok Viral Products, Fashion Finds, Home Decor, Self-Care, Budget Hacks
 
-1. Open the HTML file in a text editor
-2. Copy the Gutenberg block content (everything after the comment header)
-3. In WordPress, create a new Post or Page
-4. Switch to Code Editor mode (three dots menu > Code Editor)
-5. Paste the block content
-6. Switch back to Visual Editor
-7. Upload images where placeholders are indicated
-8. Set the title, slug, and categories as specified
-9. Publish
+#### Categories
+- Deals, Lightning Deals, Under $20 Finds
+- Beauty Deals, Home Deals, Fashion Deals, Tech Deals
+- Best-of Lists, Budget Hacks, Gift Guides, Quick Picks
+- TikTok Trending, Home & Kitchen, Fashion, Tech & Travel, Wedding, Money Tips
 
-### Affiliate Links
+---
 
-All Amazon links include Michelle's affiliate tag: `?tag=shelzysdesigns-20`
+## Repository Structure
+
+```
+/shelzyperkins/
+├── templates/                      # Reusable post templates
+│   ├── deal-roundup-template.html
+│   ├── top-10-list-template.html
+│   ├── gift-guide-template.html
+│   ├── quick-picks-template.html
+│   ├── comparison-template.html
+│   └── daily-deals-template.html
+├── marketing-assets/               # Social & email assets
+│   ├── pinterest/
+│   ├── instagram/
+│   ├── email/
+│   └── homepage/
+├── wordpress-content/              # Original WordPress content
+├── IMPLEMENTATION-GUIDE.md         # Full setup & automation guide
+└── README.md
+```
+
+---
+
+## Templates
+
+Use these templates for consistent, high-converting content:
+
+| Template | Use For |
+|----------|---------|
+| `deal-roundup-template.html` | Daily deals, flash sales, category deals |
+| `top-10-list-template.html` | Best-of lists, product roundups |
+| `gift-guide-template.html` | Holiday guides, recipient-based guides |
+| `quick-picks-template.html` | Short listicles, viral finds |
+| `comparison-template.html` | Product vs product, dupes |
+| `daily-deals-template.html` | Time-sensitive daily posts |
 
 ---
 
 ## Marketing Assets
 
-Located in `marketing-assets/`:
+### Pinterest (`marketing-assets/pinterest/`)
+- Pin templates with text overlays
+- Descriptions and hashtags
+- Posting schedule recommendations
 
-### Pinterest (`pinterest/`)
-- **pinterest-pins.md** - 8 pin templates with text overlays, descriptions, hashtags, and posting schedule
+### Instagram (`marketing-assets/instagram/`)
+- Story sequences
+- Reel scripts
+- Captions and hashtag sets
 
-### Instagram (`instagram/`)
-- **instagram-stories.md** - Story sequences, Reel scripts, captions, and hashtag sets
-
-### Email (`email/`)
-- **email-campaigns.html** - 3 HTML email templates:
-  - Black Friday Launch
-  - Cyber Monday
-  - Shipping Deadline Reminder
-
-### Homepage (`homepage/`)
-- **homepage-banner.html** - 4 banner options (announcement bar, hero, sticky bar, countdown)
-- **banner-payload.json** - API payload used to publish banner
+### Email (`marketing-assets/email/`)
+- Black Friday email template
+- Cyber Monday email template
+- Shipping deadline reminder
 
 ---
 
-## Live WordPress Pages
+## Quick Start Guide
 
-| Page | URL |
-|------|-----|
-| Blog Post | https://shelzyperkins.com/black-friday-cyber-monday-gift-guide-water-bottles/ |
-| Landing Page | https://shelzyperkins.com/holiday-water-bottle-deal/ |
-| Homepage Banner | https://shelzyperkins.com/black-friday-banner/ |
+### For Content Creation
+1. Choose appropriate template from `/templates/`
+2. Replace placeholders with product info
+3. Add Amazon affiliate links with tag `?tag=shelzysdesigns-20`
+4. Copy to WordPress Code Editor
+5. Switch to Visual Editor and publish
+
+### For Site Setup
+See `IMPLEMENTATION-GUIDE.md` for:
+- Theme installation (Kadence/Astra recommended)
+- Essential plugins
+- SEO configuration
+- Email marketing setup
+- Pinterest automation
+- Analytics tracking
+- Monetization optimization
+
+---
+
+## Affiliate Links
+
+All Amazon links must include the affiliate tag:
+```
+https://www.amazon.com/dp/[ASIN]?tag=shelzysdesigns-20
+```
+
+---
+
+## Brand Colors
+
+| Color | Hex | Use |
+|-------|-----|-----|
+| Sage Green | `#9CAF88` | Primary, headers, CTAs |
+| Soft Beige | `#F5F5DC` | Backgrounds, callouts |
+| Amazon Orange | `#FF9900` | Buttons, links |
+| Charcoal | `#333333` | Body text |
+| White | `#FFFFFF` | Background |
+
+---
+
+## Support
+
+- **Implementation Help:** See `IMPLEMENTATION-GUIDE.md`
+- **WordPress:** wordpress.org/support
+- **Amazon Associates:** affiliate-program.amazon.com
+
+---
+
+*Last Updated: November 2025*
