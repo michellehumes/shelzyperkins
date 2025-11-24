@@ -34,3 +34,35 @@ Located in `wordpress-content/`:
 ### Affiliate Links
 
 All Amazon links include Michelle's affiliate tag: `?tag=shelzysdesigns-20`
+
+---
+
+## Marketing Assets
+
+Located in `marketing-assets/`:
+
+### Pinterest (`pinterest/`)
+- **pinterest-pins.md** - 8 pin templates with text overlays, descriptions, hashtags, and posting schedule
+
+### Instagram (`instagram/`)
+- **instagram-stories.md** - Story sequences, Reel scripts, captions, and hashtag sets
+
+### Email (`email/`)
+- **email-campaigns.html** - 3 HTML email templates:
+  - Black Friday Launch
+  - Cyber Monday
+  - Shipping Deadline Reminder
+
+### Homepage (`homepage/`)
+- **homepage-banner.html** - 4 banner options (announcement bar, hero, sticky bar, countdown)
+- **banner-payload.json** - API payload used to publish banner
+
+---
+
+## Live WordPress Pages
+
+| Page | URL |
+|------|-----|
+| Blog Post | https://shelzyperkins.com/black-friday-cyber-monday-gift-guide-water-bottles/ |
+| Landing Page | https://shelzyperkins.com/holiday-water-bottle-deal/ |
+| Homepage Banner | https://shelzyperkins.com/black-friday-banner/ |
