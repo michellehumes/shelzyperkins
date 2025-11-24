@@ -8,6 +8,11 @@
 get_header();
 ?>
 
+<!-- Breadcrumbs -->
+<div class="sp-container sp-container--narrow sp-mt-md">
+    <?php sp_breadcrumbs(); ?>
+</div>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class('sp-post sp-single'); ?>>
     <!-- Post Header -->
     <header class="sp-post__header">
@@ -99,14 +104,30 @@ get_header();
                 </div>
             </div>
 
-            <!-- Author Box -->
-            <div class="sp-author-box">
-                <div class="sp-author-box__avatar">
-                    <?php echo get_avatar(get_the_author_meta('ID'), 80); ?>
+            <!-- Enhanced Author Box -->
+            <div class="sp-author-bio-enhanced">
+                <div class="sp-author-bio__avatar">
+                    <?php echo get_avatar(get_the_author_meta('ID'), 120); ?>
                 </div>
-                <div class="sp-author-box__info">
-                    <h4 class="sp-author-box__name"><?php the_author(); ?></h4>
-                    <p class="sp-author-box__bio"><?php the_author_meta('description'); ?></p>
+                <div class="sp-author-bio__content">
+                    <h4 class="sp-author-bio__name">
+                        <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>"><?php the_author(); ?></a>
+                    </h4>
+                    <?php if (get_the_author_meta('description')): ?>
+                    <p class="sp-author-bio__description"><?php the_author_meta('description'); ?></p>
+                    <?php else: ?>
+                    <p class="sp-author-bio__description">I'm a deal hunter and your personal shopping assistant. Every product I share has been carefully researched to make sure it's actually worth your money!</p>
+                    <?php endif; ?>
+                    <p class="sp-author-bio__posts-count">
+                        <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
+                            <?php printf(_n('%d article', '%d articles', count_user_posts(get_the_author_meta('ID')), 'shelzyperkins'), count_user_posts(get_the_author_meta('ID'))); ?>
+                        </a>
+                    </p>
+                    <div class="sp-author-bio__social">
+                        <a href="https://pinterest.com/shelzyperkins" target="_blank" rel="noopener" class="sp-author-bio__social-link">Pinterest</a>
+                        <a href="https://instagram.com/shelzyperkins" target="_blank" rel="noopener" class="sp-author-bio__social-link">Instagram</a>
+                        <a href="https://tiktok.com/@shelzyperkins" target="_blank" rel="noopener" class="sp-author-bio__social-link">TikTok</a>
+                    </div>
                 </div>
             </div>
         </div>

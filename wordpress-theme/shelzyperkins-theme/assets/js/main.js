@@ -304,4 +304,198 @@
         });
     }
 
+    /**
+     * Exit Intent Popup
+     */
+    function initExitIntentPopup() {
+        const popup = document.getElementById('exit-popup');
+        const closeBtn = document.getElementById('popup-close');
+        const form = document.getElementById('popup-form');
+
+        if (!popup) return;
+
+        // Check if popup was already shown or user subscribed
+        if (localStorage.getItem('sp_popup_shown') || document.cookie.includes('sp_subscribed')) {
+            return;
+        }
+
+        let popupShown = false;
+        let scrollThreshold = 0.5; // 50% scroll
+
+        // Exit intent on mouse leave (desktop)
+        document.addEventListener('mouseout', function(e) {
+            if (popupShown) return;
+
+            // Check if mouse is leaving at the top of the page
+            if (e.clientY < 10 && e.relatedTarget === null) {
+                showPopup();
+            }
+        });
+
+        // Scroll-based trigger (mobile fallback)
+        window.addEventListener('scroll', function() {
+            if (popupShown) return;
+
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+
+            if (scrollPercent > scrollThreshold) {
+                // Wait a bit before showing
+                setTimeout(function() {
+                    if (!popupShown) {
+                        showPopup();
+                    }
+                }, 5000);
+            }
+        }, { passive: true });
+
+        // Show popup after time on page (30 seconds)
+        setTimeout(function() {
+            if (!popupShown) {
+                showPopup();
+            }
+        }, 30000);
+
+        function showPopup() {
+            popupShown = true;
+            popup.classList.add('is-active');
+            popup.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // Mark as shown in localStorage (expires on session end)
+            localStorage.setItem('sp_popup_shown', 'true');
+
+            // Focus on input
+            const input = popup.querySelector('input[type="email"]');
+            if (input) {
+                setTimeout(() => input.focus(), 300);
+            }
+        }
+
+        function hidePopup() {
+            popup.classList.remove('is-active');
+            popup.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // Close button
+        if (closeBtn) {
+            closeBtn.addEventListener('click', hidePopup);
+        }
+
+        // Close on backdrop click
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                hidePopup();
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popup.classList.contains('is-active')) {
+                hidePopup();
+            }
+        });
+
+        // Form submission
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const input = form.querySelector('input[type="email"]');
+                const button = form.querySelector('button[type="submit"]');
+                const email = input?.value;
+
+                if (!email) return;
+
+                // Disable button and show loading
+                button.disabled = true;
+                button.textContent = 'Subscribing...';
+
+                // Simulate API call (replace with actual endpoint)
+                setTimeout(function() {
+                    button.textContent = 'Subscribed!';
+                    button.classList.add('success');
+
+                    // Set cookie to prevent showing again
+                    document.cookie = 'sp_subscribed=true; path=/; max-age=31536000'; // 1 year
+
+                    // Track subscription
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'newsletter_signup', {
+                            'event_category': 'Engagement',
+                            'event_label': 'Exit Intent Popup'
+                        });
+                    }
+
+                    // Hide popup after delay
+                    setTimeout(hidePopup, 2000);
+                }, 1000);
+            });
+        }
+    }
+
+    // Initialize exit intent popup after DOM is ready
+    initExitIntentPopup();
+
+    /**
+     * Mobile search toggle
+     */
+    const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+    if (mobileSearchToggle) {
+        mobileSearchToggle.addEventListener('click', function() {
+            const searchOverlay = document.getElementById('search-overlay');
+            if (searchOverlay) {
+                searchOverlay.classList.add('is-active');
+                const searchInput = searchOverlay.querySelector('input');
+                if (searchInput) {
+                    setTimeout(() => searchInput.focus(), 300);
+                }
+            }
+        });
+    }
+
+    /**
+     * Archive view toggle
+     */
+    document.querySelectorAll('.sp-view-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const view = this.dataset.view;
+            const container = document.getElementById('posts-container');
+
+            if (!container) return;
+
+            // Update active state
+            document.querySelectorAll('.sp-view-btn').forEach(b => b.classList.remove('is-active'));
+            this.classList.add('is-active');
+
+            // Toggle view class
+            if (view === 'list') {
+                container.classList.remove('sp-grid--3');
+                container.classList.add('sp-list-view');
+            } else {
+                container.classList.remove('sp-list-view');
+                container.classList.add('sp-grid--3');
+            }
+        });
+    });
+
+    /**
+     * Skeleton loader for images
+     */
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+        if (!img.complete) {
+            img.classList.add('sp-loading');
+
+            img.addEventListener('load', function() {
+                this.classList.remove('sp-loading');
+                this.classList.add('sp-loaded');
+            });
+
+            img.addEventListener('error', function() {
+                this.classList.remove('sp-loading');
+                this.classList.add('sp-error');
+            });
+        }
+    });
+
 })();
