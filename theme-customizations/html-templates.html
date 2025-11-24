@@ -1,0 +1,376 @@
+<!--
+  ShelzyPerkins.com HTML Templates
+  Copy these into WordPress pages or theme templates
+-->
+
+<!-- ===========================================================================
+     1. HERO SECTION (Add to homepage)
+     =========================================================================== -->
+
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-headline">Save Money. Shop Smarter. Find the Best Deals.</h1>
+        <p class="hero-subheadline">Curated Amazon finds, tested and approved by real deal hunters</p>
+
+        <form class="hero-email-form" action="/?na=s" method="post">
+            <input
+                type="email"
+                name="ne"
+                class="hero-email-input"
+                placeholder="Enter your email"
+                required
+            />
+            <button type="submit" class="hero-email-submit">Get Deals</button>
+            <input type="hidden" name="nr" value="widget" />
+            <input type="hidden" name="nl" value="1" />
+        </form>
+
+        <div class="hero-trust-badges">
+            <span>✓ 356+ Deals Curated</span>
+            <span>✓ 100% Free</span>
+            <span>✓ Updated Daily</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===========================================================================
+     2. CATEGORY NAVIGATION BAR (Add below header)
+     =========================================================================== -->
+
+<nav class="category-nav">
+    <div class="category-nav-inner">
+        <a href="/category/beauty-deals/">💄 Beauty</a>
+        <a href="/category/home-kitchen/">🏠 Home</a>
+        <a href="/category/tech-gadgets/">📱 Tech</a>
+        <a href="/category/fashion-style/">👗 Fashion</a>
+        <a href="/category/gifts/">🎁 Gifts</a>
+        <a href="/category/quick-picks/">⚡ Quick Picks</a>
+        <a href="/deals/">All Deals →</a>
+    </div>
+</nav>
+
+
+<!-- ===========================================================================
+     3. EMAIL POPUP (Exit Intent) - Add to footer
+     =========================================================================== -->
+
+<div class="email-popup-overlay" id="emailPopup">
+    <div class="email-popup">
+        <button class="email-popup-close" onclick="closeEmailPopup()">×</button>
+
+        <h2>Wait! Don't Miss Out 🎁</h2>
+        <p>Get our <strong>Top 10 Hidden Amazon Deals</strong> PDF sent straight to your inbox + weekly exclusive deals!</p>
+
+        <form class="email-popup-form" action="/?na=s" method="post">
+            <input
+                type="email"
+                name="ne"
+                placeholder="Your email address"
+                required
+            />
+            <button type="submit">Send Me The Deals</button>
+            <input type="hidden" name="nr" value="widget" />
+            <input type="hidden" name="nl" value="1" />
+        </form>
+
+        <small style="color: #999; margin-top: 10px; display: block;">
+            No spam. Unsubscribe anytime. We respect your privacy.
+        </small>
+    </div>
+</div>
+
+<script>
+// Exit intent popup logic
+let popupShown = false;
+
+document.addEventListener('mouseleave', function(e) {
+    if (e.clientY < 0 && !popupShown && !sessionStorage.getItem('emailPopupShown')) {
+        document.getElementById('emailPopup').classList.add('active');
+        popupShown = true;
+        sessionStorage.setItem('emailPopupShown', 'true');
+    }
+});
+
+// Close popup
+function closeEmailPopup() {
+    document.getElementById('emailPopup').classList.remove('active');
+}
+
+// Close on overlay click
+document.getElementById('emailPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeEmailPopup();
+    }
+});
+
+// Auto-show after 30 seconds if not shown
+setTimeout(function() {
+    if (!popupShown && !sessionStorage.getItem('emailPopupShown')) {
+        document.getElementById('emailPopup').classList.add('active');
+        popupShown = true;
+        sessionStorage.setItem('emailPopupShown', 'true');
+    }
+}, 30000);
+</script>
+
+
+<!-- ===========================================================================
+     4. ENHANCED PRODUCT CARD (Replace existing product blocks)
+     =========================================================================== -->
+
+<div class="product-card">
+    <div class="product-badges">
+        <span class="badge badge-prime">Prime</span>
+        <span class="badge badge-deal">Deal</span>
+    </div>
+
+    <h3>Product Name Here</h3>
+
+    <div class="product-rating">
+        <span class="stars">★★★★★</span>
+        <span class="count">(12,543 reviews)</span>
+    </div>
+
+    <p class="product-description">
+        This is a detailed description of the product, highlighting its key features and benefits.
+    </p>
+
+    <div class="product-price">
+        <span class="price-current">$29.99</span>
+        <span class="price-original">$49.99</span>
+        <span class="price-savings">Save 40%</span>
+    </div>
+
+    <div class="product-cta">
+        <a href="https://www.amazon.com/dp/ASIN?tag=shelzysdesigns-20"
+           target="_blank"
+           rel="nofollow"
+           class="btn-amazon">
+            View on Amazon →
+        </a>
+    </div>
+</div>
+
+
+<!-- ===========================================================================
+     5. COMPARISON TABLE (For product comparison posts)
+     =========================================================================== -->
+
+<div style="overflow-x: auto;">
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Rating</th>
+                <th>Best For</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Product 1</strong></td>
+                <td>$29.99</td>
+                <td>⭐⭐⭐⭐⭐ (4.8/5)</td>
+                <td>Budget shoppers</td>
+                <td><a href="#" class="btn-amazon">View</a></td>
+            </tr>
+            <tr>
+                <td><strong>Product 2</strong></td>
+                <td>$49.99</td>
+                <td>⭐⭐⭐⭐☆ (4.5/5)</td>
+                <td>Premium quality</td>
+                <td><a href="#" class="btn-amazon">View</a></td>
+            </tr>
+            <tr>
+                <td><strong>Product 3</strong></td>
+                <td>$39.99</td>
+                <td>⭐⭐⭐⭐⭐ (4.9/5)</td>
+                <td>Best overall</td>
+                <td><a href="#" class="btn-amazon">View</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- ===========================================================================
+     6. AUTHOR BIO (Automatically added via functions.php)
+     =========================================================================== -->
+
+<!-- This is handled by the functions.php code -->
+<!-- Make sure to add author bio in WordPress: Users > Your Profile > Biographical Info -->
+
+
+<!-- ===========================================================================
+     7. SIDEBAR EMAIL SIGNUP WIDGET
+     =========================================================================== -->
+
+<div class="sidebar-email-signup" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+    <h3 style="color: white; margin-top: 0;">💌 Get Weekly Deals</h3>
+    <p style="font-size: 14px; margin-bottom: 20px;">Join 10,000+ smart shoppers getting exclusive Amazon deals every week!</p>
+
+    <form action="/?na=s" method="post">
+        <input
+            type="email"
+            name="ne"
+            placeholder="Your email"
+            required
+            style="width: 100%; padding: 12px; border: none; border-radius: 6px; margin-bottom: 10px; font-size: 14px;"
+        />
+        <button
+            type="submit"
+            style="width: 100%; padding: 12px; background: #FF9900; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;"
+        >
+            Subscribe Now
+        </button>
+        <input type="hidden" name="nr" value="widget" />
+        <input type="hidden" name="nl" value="1" />
+    </form>
+
+    <small style="font-size: 11px; opacity: 0.9; display: block; margin-top: 10px;">
+        ✓ Free • ✓ No spam • ✓ Unsubscribe anytime
+    </small>
+</div>
+
+
+<!-- ===========================================================================
+     8. FEATURED CATEGORIES GRID (Homepage)
+     =========================================================================== -->
+
+<div class="featured-categories" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin: 50px 0;">
+
+    <a href="/category/beauty-deals/" style="text-decoration: none;">
+        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; border-radius: 15px; text-align: center; color: white; transition: transform 0.3s;">
+            <div style="font-size: 48px; margin-bottom: 15px;">💄</div>
+            <h3 style="color: white; margin: 0;">Beauty Deals</h3>
+            <p style="font-size: 14px; margin: 10px 0 0 0; opacity: 0.95;">Skincare, makeup & more</p>
+        </div>
+    </a>
+
+    <a href="/category/home-kitchen/" style="text-decoration: none;">
+        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 40px; border-radius: 15px; text-align: center; color: white; transition: transform 0.3s;">
+            <div style="font-size: 48px; margin-bottom: 15px;">🏠</div>
+            <h3 style="color: white; margin: 0;">Home & Kitchen</h3>
+            <p style="font-size: 14px; margin: 10px 0 0 0; opacity: 0.95;">Organize & upgrade</p>
+        </div>
+    </a>
+
+    <a href="/category/tech-gadgets/" style="text-decoration: none;">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 15px; text-align: center; color: white; transition: transform 0.3s;">
+            <div style="font-size: 48px; margin-bottom: 15px;">📱</div>
+            <h3 style="color: white; margin: 0;">Tech Gadgets</h3>
+            <p style="font-size: 14px; margin: 10px 0 0 0; opacity: 0.95;">Latest tech deals</p>
+        </div>
+    </a>
+
+    <a href="/category/fashion-style/" style="text-decoration: none;">
+        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 40px; border-radius: 15px; text-align: center; color: white; transition: transform 0.3s;">
+            <div style="font-size: 48px; margin-bottom: 15px;">👗</div>
+            <h3 style="color: white; margin: 0;">Fashion</h3>
+            <p style="font-size: 14px; margin: 10px 0 0 0; opacity: 0.95;">Style on a budget</p>
+        </div>
+    </a>
+
+</div>
+
+<style>
+.featured-categories a:hover div {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+</style>
+
+
+<!-- ===========================================================================
+     9. SOCIAL PROOF BAR (Add to header/below hero)
+     =========================================================================== -->
+
+<div style="background: #f9f9f9; padding: 15px 0; text-align: center; border-bottom: 1px solid #eee;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; font-size: 14px; color: #666;">
+        <span><strong style="color: #FF9900;">356+</strong> Deals Curated</span>
+        <span><strong style="color: #FF9900;">10,000+</strong> Happy Shoppers</span>
+        <span><strong style="color: #FF9900;">$2M+</strong> Saved This Year</span>
+        <span>⭐⭐⭐⭐⭐ <strong>4.9/5</strong> Rating</span>
+    </div>
+</div>
+
+
+<!-- ===========================================================================
+     10. FAQ SCHEMA (Add to relevant posts for rich snippets)
+     =========================================================================== -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the best Amazon deals right now?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best Amazon deals change daily. Our curated list includes products across beauty, home, tech, and fashion categories, all tested and verified for quality and value."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you find these deals?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We use a combination of price tracking tools, Amazon's best seller lists, customer reviews, and hands-on testing to find and verify the best deals."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are these affiliate links?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, we use Amazon affiliate links. When you purchase through our links, we earn a small commission at no extra cost to you. This helps us continue providing free content."
+      }
+    }
+  ]
+}
+</script>
+
+
+<!-- ===========================================================================
+     11. LOADING SKELETON (For dynamic content loading)
+     =========================================================================== -->
+
+<div class="skeleton skeleton-card"></div>
+<div class="skeleton skeleton-text" style="width: 80%;"></div>
+<div class="skeleton skeleton-text" style="width: 60%;"></div>
+<div class="skeleton skeleton-text" style="width: 90%;"></div>
+
+
+<!-- ===========================================================================
+     12. STICKY CTA BAR (Mobile)
+     =========================================================================== -->
+
+<div class="mobile-cta-bar" style="position: fixed; bottom: 0; left: 0; right: 0; background: #FF9900; padding: 15px; text-align: center; z-index: 9999; display: none;">
+    <a href="#email-signup" style="color: white; text-decoration: none; font-weight: 600; font-size: 16px;">
+        🎁 Get Free Weekly Deals →
+    </a>
+</div>
+
+<style>
+@media (max-width: 768px) {
+    .mobile-cta-bar {
+        display: block !important;
+    }
+}
+</style>
+
+<script>
+// Show/hide based on scroll
+window.addEventListener('scroll', function() {
+    var bar = document.querySelector('.mobile-cta-bar');
+    if (window.scrollY > 500) {
+        bar.style.display = 'block';
+    } else {
+        bar.style.display = 'none';
+    }
+});
+</script>
