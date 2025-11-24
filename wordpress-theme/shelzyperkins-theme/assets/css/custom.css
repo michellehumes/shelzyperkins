@@ -1,0 +1,722 @@
+/**
+ * ShelzyPerkins Custom Styles
+ * Additional styles beyond the main theme stylesheet
+ *
+ * @package ShelzyPerkins
+ */
+
+/* ==========================================================================
+   Additional Layout Styles
+   ========================================================================== */
+
+/* Blog Layout */
+.sp-blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--sp-spacing-2xl);
+}
+
+@media (max-width: 992px) {
+    .sp-blog-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sp-blog-sidebar {
+        order: 2;
+    }
+}
+
+/* Section Header */
+.sp-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-spacing-xl);
+}
+
+.sp-section__title {
+    font-size: var(--sp-font-size-3xl);
+    margin-bottom: 0;
+}
+
+.sp-section__subtitle {
+    color: var(--sp-gray);
+    font-size: var(--sp-font-size-lg);
+    margin-top: var(--sp-spacing-sm);
+}
+
+/* Background Variants */
+.sp-bg-light {
+    background: var(--sp-off-white);
+}
+
+.sp-bg-dark {
+    background: var(--sp-charcoal);
+    color: var(--sp-white);
+}
+
+.sp-bg-gradient {
+    background: var(--sp-gradient-brand);
+}
+
+/* ==========================================================================
+   Search Overlay
+   ========================================================================== */
+.sp-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--sp-white);
+    padding: var(--sp-spacing-2xl);
+    box-shadow: var(--sp-shadow-lg);
+    z-index: 1001;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--sp-transition-base);
+}
+
+.sp-search-overlay.is-active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.sp-search-overlay .sp-container {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-spacing-md);
+}
+
+.sp-search-form {
+    display: flex;
+    flex: 1;
+    gap: var(--sp-spacing-sm);
+}
+
+.sp-search-form__input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid var(--sp-gray-lighter);
+    border-radius: var(--sp-radius-md);
+    font-size: var(--sp-font-size-lg);
+    font-family: var(--sp-font-primary);
+    transition: border-color var(--sp-transition-fast);
+}
+
+.sp-search-form__input:focus {
+    outline: none;
+    border-color: var(--sp-coral);
+}
+
+.sp-search-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--sp-spacing-sm);
+    color: var(--sp-gray);
+    transition: color var(--sp-transition-fast);
+}
+
+.sp-search-close:hover {
+    color: var(--sp-coral);
+}
+
+/* ==========================================================================
+   Announcement Bar
+   ========================================================================== */
+.sp-announcement-bar {
+    background: var(--sp-charcoal);
+    color: var(--sp-white);
+    text-align: center;
+    padding: var(--sp-spacing-sm) var(--sp-spacing-md);
+    font-size: var(--sp-font-size-sm);
+}
+
+.sp-announcement-bar p {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Page Header Styles
+   ========================================================================== */
+.sp-page__header {
+    background: var(--sp-gradient-brand);
+    padding: var(--sp-spacing-3xl) 0;
+    text-align: center;
+    color: var(--sp-white);
+    margin-bottom: var(--sp-spacing-2xl);
+}
+
+.sp-page__title {
+    color: var(--sp-white);
+    margin: 0;
+}
+
+.sp-page__content {
+    padding-bottom: var(--sp-spacing-3xl);
+}
+
+/* ==========================================================================
+   Post Styles
+   ========================================================================== */
+.sp-post__featured-image {
+    margin: calc(-1 * var(--sp-spacing-2xl)) 0 var(--sp-spacing-2xl);
+}
+
+.sp-post__image {
+    border-radius: var(--sp-radius-xl);
+    box-shadow: var(--sp-shadow-lg);
+}
+
+.sp-post__categories {
+    display: flex;
+    gap: var(--sp-spacing-sm);
+    justify-content: center;
+    margin-bottom: var(--sp-spacing-md);
+}
+
+.sp-post__footer {
+    padding: var(--sp-spacing-2xl);
+    border-top: 1px solid var(--sp-gray-lighter);
+    margin-top: var(--sp-spacing-2xl);
+}
+
+.sp-post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-spacing-sm);
+    margin-bottom: var(--sp-spacing-lg);
+}
+
+.sp-tag {
+    background: var(--sp-off-white);
+    padding: 4px 12px;
+    border-radius: var(--sp-radius-full);
+    font-size: var(--sp-font-size-sm);
+    color: var(--sp-gray);
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-tag:hover {
+    background: var(--sp-coral);
+    color: var(--sp-white);
+}
+
+/* Share Buttons */
+.sp-post__share {
+    margin-bottom: var(--sp-spacing-xl);
+}
+
+.sp-share-buttons {
+    display: flex;
+    gap: var(--sp-spacing-sm);
+    margin-top: var(--sp-spacing-sm);
+}
+
+.sp-share-btn {
+    padding: 8px 16px;
+    border-radius: var(--sp-radius-md);
+    font-size: var(--sp-font-size-sm);
+    font-weight: 500;
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-share-btn--pinterest {
+    background: #E60023;
+    color: white;
+}
+
+.sp-share-btn--facebook {
+    background: #1877F2;
+    color: white;
+}
+
+.sp-share-btn--twitter {
+    background: #1DA1F2;
+    color: white;
+}
+
+.sp-share-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Author Box */
+.sp-author-box {
+    display: flex;
+    gap: var(--sp-spacing-lg);
+    background: var(--sp-off-white);
+    padding: var(--sp-spacing-lg);
+    border-radius: var(--sp-radius-lg);
+}
+
+.sp-author-box__avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.sp-author-box__name {
+    margin-bottom: var(--sp-spacing-xs);
+}
+
+.sp-author-box__bio {
+    color: var(--sp-gray);
+    font-size: var(--sp-font-size-sm);
+    margin: 0;
+}
+
+/* ==========================================================================
+   Sidebar Styles
+   ========================================================================== */
+.sp-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-spacing-xl);
+}
+
+.sp-widget {
+    background: var(--sp-white);
+    border-radius: var(--sp-radius-lg);
+    padding: var(--sp-spacing-lg);
+    box-shadow: var(--sp-shadow-sm);
+}
+
+.sp-widget__title {
+    font-size: var(--sp-font-size-lg);
+    margin-bottom: var(--sp-spacing-md);
+    padding-bottom: var(--sp-spacing-sm);
+    border-bottom: 2px solid var(--sp-gray-lighter);
+}
+
+.sp-widget__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sp-widget__list li {
+    margin-bottom: var(--sp-spacing-sm);
+}
+
+.sp-widget__list a {
+    display: flex;
+    justify-content: space-between;
+    color: var(--sp-charcoal);
+    padding: var(--sp-spacing-xs) 0;
+    transition: color var(--sp-transition-fast);
+}
+
+.sp-widget__list a:hover {
+    color: var(--sp-coral);
+}
+
+.sp-widget__count {
+    color: var(--sp-gray-light);
+    font-size: var(--sp-font-size-sm);
+}
+
+/* Popular Posts Widget */
+.sp-widget__posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sp-widget__post-item {
+    display: flex;
+    gap: var(--sp-spacing-md);
+    margin-bottom: var(--sp-spacing-md);
+    padding-bottom: var(--sp-spacing-md);
+    border-bottom: 1px solid var(--sp-gray-lighter);
+}
+
+.sp-widget__post-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.sp-widget__post-thumb img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--sp-radius-sm);
+}
+
+.sp-widget__post-title {
+    font-size: var(--sp-font-size-sm);
+    font-weight: 500;
+    color: var(--sp-charcoal);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sp-widget__post-title:hover {
+    color: var(--sp-coral);
+}
+
+.sp-widget__post-date {
+    font-size: var(--sp-font-size-xs);
+    color: var(--sp-gray-light);
+}
+
+/* CTA Widget */
+.sp-widget--cta {
+    background: var(--sp-gradient-brand);
+    color: var(--sp-white);
+    text-align: center;
+}
+
+.sp-widget--cta .sp-widget__title {
+    color: var(--sp-white);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.sp-widget--cta p {
+    opacity: 0.9;
+}
+
+/* Social Widget */
+.sp-social-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-spacing-sm);
+}
+
+.sp-social-link {
+    display: block;
+    padding: 10px 16px;
+    background: var(--sp-off-white);
+    border-radius: var(--sp-radius-md);
+    text-align: center;
+    font-weight: 500;
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-social-link:hover {
+    transform: translateX(4px);
+}
+
+.sp-social-link--pinterest:hover {
+    background: #E60023;
+    color: white;
+}
+
+.sp-social-link--instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+}
+
+.sp-social-link--tiktok:hover {
+    background: #010101;
+    color: white;
+}
+
+/* ==========================================================================
+   Pinterest Grid
+   ========================================================================== */
+.sp-pinterest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-spacing-md);
+}
+
+@media (max-width: 768px) {
+    .sp-pinterest-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.sp-pinterest-card {
+    position: relative;
+    border-radius: var(--sp-radius-lg);
+    overflow: hidden;
+}
+
+.sp-pinterest-card__link {
+    display: block;
+}
+
+.sp-pinterest-card__image {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: transform var(--sp-transition-slow);
+}
+
+.sp-pinterest-card:hover .sp-pinterest-card__image {
+    transform: scale(1.05);
+}
+
+.sp-pinterest-card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: var(--sp-spacing-xl) var(--sp-spacing-md) var(--sp-spacing-md);
+    color: var(--sp-white);
+}
+
+.sp-pinterest-card__title {
+    font-size: var(--sp-font-size-base);
+    margin-bottom: var(--sp-spacing-xs);
+    color: var(--sp-white);
+}
+
+.sp-pinterest-card__cta {
+    font-size: var(--sp-font-size-sm);
+    opacity: 0.8;
+}
+
+.sp-pinterest-card__pin {
+    position: absolute;
+    top: var(--sp-spacing-md);
+    right: var(--sp-spacing-md);
+    background: #E60023;
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-pinterest-card:hover .sp-pinterest-card__pin {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ==========================================================================
+   About Section
+   ========================================================================== */
+.sp-about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-spacing-2xl);
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .sp-about-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sp-about-content h2 {
+    font-size: var(--sp-font-size-4xl);
+}
+
+.sp-about-image img {
+    border-radius: var(--sp-radius-xl);
+    box-shadow: var(--sp-shadow-lg);
+}
+
+/* ==========================================================================
+   Deal Alert Box
+   ========================================================================== */
+.sp-deal-alert {
+    background: linear-gradient(135deg, #FFF5F5 0%, #FFFBEB 100%);
+    border: 2px solid var(--sp-coral);
+    border-radius: var(--sp-radius-lg);
+    padding: var(--sp-spacing-xl);
+    text-align: center;
+    margin: var(--sp-spacing-xl) 0;
+}
+
+.sp-deal-alert h3 {
+    color: var(--sp-coral);
+}
+
+/* ==========================================================================
+   Price Drop Box
+   ========================================================================== */
+.sp-price-drop {
+    background: var(--sp-off-white);
+    border-left: 4px solid var(--sp-success);
+    padding: var(--sp-spacing-md);
+    margin: var(--sp-spacing-md) 0;
+    border-radius: 0 var(--sp-radius-md) var(--sp-radius-md) 0;
+}
+
+/* ==========================================================================
+   Placeholder Styles
+   ========================================================================== */
+.sp-placeholder-img {
+    background: linear-gradient(135deg, var(--sp-gray-lighter) 0%, var(--sp-off-white) 100%);
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sp-card--placeholder {
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   Related Posts
+   ========================================================================== */
+.sp-related-posts {
+    background: var(--sp-off-white);
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.sp-pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.sp-pagination .page-numbers {
+    display: flex;
+    list-style: none;
+    gap: var(--sp-spacing-sm);
+    padding: 0;
+    margin: 0;
+}
+
+.sp-pagination a,
+.sp-pagination span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    background: var(--sp-white);
+    border-radius: var(--sp-radius-md);
+    font-weight: 500;
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-pagination a:hover {
+    background: var(--sp-coral);
+    color: var(--sp-white);
+}
+
+.sp-pagination .current {
+    background: var(--sp-gradient-brand);
+    color: var(--sp-white);
+}
+
+/* ==========================================================================
+   Breadcrumbs
+   ========================================================================== */
+.sp-breadcrumbs {
+    padding: var(--sp-spacing-md) 0;
+    font-size: var(--sp-font-size-sm);
+}
+
+.sp-breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sp-breadcrumbs__item {
+    display: flex;
+    align-items: center;
+}
+
+.sp-breadcrumbs__item::after {
+    content: '/';
+    margin: 0 var(--sp-spacing-sm);
+    color: var(--sp-gray-light);
+}
+
+.sp-breadcrumbs__item:last-child::after {
+    display: none;
+}
+
+.sp-breadcrumbs__item a {
+    color: var(--sp-gray);
+}
+
+.sp-breadcrumbs__item a:hover {
+    color: var(--sp-coral);
+}
+
+.sp-breadcrumbs__item--current {
+    color: var(--sp-charcoal);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   No Posts State
+   ========================================================================== */
+.sp-no-posts {
+    text-align: center;
+    padding: var(--sp-spacing-3xl);
+    background: var(--sp-white);
+    border-radius: var(--sp-radius-xl);
+}
+
+/* ==========================================================================
+   Back to Top Button
+   ========================================================================== */
+.sp-back-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: var(--sp-spacing-lg);
+    background: var(--sp-gradient-brand);
+    color: var(--sp-white);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--sp-shadow-brand);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all var(--sp-transition-base);
+    z-index: 998;
+    border: none;
+    cursor: pointer;
+}
+
+.sp-back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.sp-back-to-top:hover {
+    transform: translateY(-4px);
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+    .sp-header,
+    .sp-footer,
+    .sp-sticky-bar,
+    .sp-sidebar,
+    .sp-back-to-top,
+    .sp-share-buttons,
+    .sp-email-signup {
+        display: none !important;
+    }
+
+    .sp-post__content {
+        max-width: 100%;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}

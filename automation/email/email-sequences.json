@@ -1,0 +1,124 @@
+{
+  "welcomeSequence": {
+    "name": "Welcome Sequence",
+    "trigger": "newsletter_signup",
+    "emails": [
+      {
+        "id": "welcome_1",
+        "subject": "Welcome to ShelzyPerkins! Here's your free gift...",
+        "delay": "0",
+        "content": {
+          "preheader": "Plus: My top 10 Amazon finds this week",
+          "body": "# Hey there, smart shopper!\n\nI'm SO excited you're here! You just joined thousands of savvy shoppers who never overpay for anything.\n\n## Your Welcome Gift\n\nAs promised, here are my current favorite Amazon finds that you absolutely need to know about:\n\n[TOP_DEALS_PLACEHOLDER]\n\n## What to expect from me:\n\n- **Daily Deals** - The best Amazon discounts, updated daily\n- **Best-Of Lists** - Curated product recommendations I personally test\n- **Money-Saving Tips** - Because smart shopping is the best shopping\n\nI'll never spam you (pinky promise). Just great deals and finds you'll actually want to know about.\n\nHappy shopping!\n\nXO,\nShelzy\n\nP.S. Follow me on Pinterest for even more finds: [pinterest.com/shelzyperkins](https://pinterest.com/shelzyperkins)"
+        }
+      },
+      {
+        "id": "welcome_2",
+        "subject": "My #1 Amazon hack (saves me $100s/year)",
+        "delay": "2 days",
+        "content": {
+          "preheader": "This simple trick changed everything",
+          "body": "# The Amazon Hack Nobody Talks About\n\nHey!\n\nYesterday I got a message asking how I always find such great deals. So I'm sharing my #1 secret:\n\n## Price Tracking\n\nBefore buying ANYTHING over $30 on Amazon, I check its price history. Here's how:\n\n1. Install the **CamelCamelCamel** browser extension (free)\n2. It shows you if the current price is actually a good deal\n3. Set alerts to get notified when prices drop\n\n**Why this matters:** Amazon prices change constantly. That '50% off' sale? Sometimes it's from an artificially inflated price. This tool shows you the REAL deal history.\n\n## This Week's Actually Good Deals\n\n[WEEKLY_DEALS_PLACEHOLDER]\n\nThese are verified good prices (I checked!).\n\nTalk soon,\nShelzy\n\nP.S. Reply to this email if you have any questions - I read every message!"
+        }
+      },
+      {
+        "id": "welcome_3",
+        "subject": "The deals everyone's buying this week",
+        "delay": "5 days",
+        "content": {
+          "preheader": "See what's trending + my top picks",
+          "body": "# What's Hot This Week\n\nHey friend!\n\nEvery week I track which products my readers are loving most. Here are this week's winners:\n\n## Top 5 Reader Favorites\n\n[TOP_READER_PICKS_PLACEHOLDER]\n\n## Why These Are Popular\n\nI've noticed a trend: the products that do best aren't always the cheapest - they're the best VALUE. Quality + price + usefulness = winner.\n\n## Categories to Explore\n\n- **[Beauty Finds](/category/beauty/)** - Skincare, makeup, hair\n- **[Home Upgrades](/category/home/)** - Organization, decor, kitchen\n- **[Tech Gadgets](/category/tech/)** - Smart home, accessories\n- **[Daily Deals](/deals/)** - Today's best discounts\n\nHappy exploring!\n\nShelzy\n\nP.S. Have a product you want me to review? Reply and let me know!"
+        }
+      }
+    ]
+  },
+  "weeklyNewsletter": {
+    "name": "Weekly Deals Digest",
+    "schedule": "every_sunday_9am",
+    "subject_templates": [
+      "This week's best Amazon deals (you don't want to miss #3)",
+      "The deals I'm buying this week",
+      "Weekly roundup: {count} deals you need to see",
+      "Your weekly dose of Amazon finds"
+    ],
+    "content": {
+      "sections": [
+        {
+          "name": "hero_deal",
+          "title": "Deal of the Week",
+          "description": "One standout deal to highlight"
+        },
+        {
+          "name": "category_picks",
+          "title": "This Week's Top Picks",
+          "categories": ["beauty", "home", "tech"],
+          "items_per_category": 2
+        },
+        {
+          "name": "price_drops",
+          "title": "Price Drop Alerts",
+          "description": "Products that just dropped in price"
+        },
+        {
+          "name": "new_posts",
+          "title": "New on the Blog",
+          "description": "Latest posts from ShelzyPerkins.com"
+        },
+        {
+          "name": "social_cta",
+          "title": "Follow Along",
+          "description": "Social media links"
+        }
+      ]
+    }
+  },
+  "abandonedSignup": {
+    "name": "Abandoned Signup Recovery",
+    "trigger": "started_signup_not_completed",
+    "delay": "1 hour",
+    "subject": "Did you mean to do that?",
+    "content": "Looks like you started to join but didn't finish! No worries - here's the link to complete your signup and get access to exclusive deals: [SIGNUP_LINK]"
+  },
+  "reEngagement": {
+    "name": "Re-engagement Sequence",
+    "trigger": "no_open_30_days",
+    "emails": [
+      {
+        "id": "reengage_1",
+        "subject": "We miss you! Here's what you've been missing...",
+        "delay": "0",
+        "content": "It's been a while! Here's a recap of the best deals and finds from the past month..."
+      },
+      {
+        "id": "reengage_2",
+        "subject": "Last chance: Want to stay on the list?",
+        "delay": "7 days",
+        "content": "Click here to stay subscribed, or we'll remove you to keep our list fresh. No hard feelings!"
+      }
+    ]
+  },
+  "emailDesign": {
+    "colors": {
+      "primary": "#FF6B6B",
+      "secondary": "#FFE66D",
+      "text": "#2D3436",
+      "background": "#FFFFFF",
+      "accent": "#00B894"
+    },
+    "fonts": {
+      "heading": "Poppins, sans-serif",
+      "body": "Poppins, sans-serif"
+    },
+    "logo": "https://shelzyperkins.com/logo.png",
+    "social": {
+      "pinterest": "https://pinterest.com/shelzyperkins",
+      "instagram": "https://instagram.com/shelzyperkins",
+      "tiktok": "https://tiktok.com/@shelzyperkins"
+    },
+    "footer": {
+      "address": "ShelzyPerkins.com",
+      "unsubscribe": "You're receiving this because you signed up at ShelzyPerkins.com. [Unsubscribe]",
+      "disclaimer": "As an Amazon Associate, I earn from qualifying purchases."
+    }
+  }
+}

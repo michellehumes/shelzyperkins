@@ -1,0 +1,137 @@
+{
+  "rankMathSettings": {
+    "general": {
+      "modules": {
+        "sitemap": true,
+        "seo-analysis": true,
+        "404-monitor": true,
+        "redirections": true,
+        "rich-snippets": true,
+        "role-manager": true,
+        "analytics": true,
+        "instant-indexing": true,
+        "link-counter": true
+      },
+      "breadcrumbs": {
+        "enabled": true,
+        "separator": "»",
+        "home_text": "Home",
+        "show_on_front_page": false
+      }
+    },
+    "titles": {
+      "homepage": {
+        "title": "ShelzyPerkins | Smart Deals & Real Savings on Amazon Finds",
+        "description": "Discover the best Amazon deals, curated product recommendations, and money-saving tips. Your trusted source for smart shopping!",
+        "robots": "index, follow"
+      },
+      "posts": {
+        "title": "%title% | ShelzyPerkins",
+        "description": "%excerpt%",
+        "robots": "index, follow",
+        "schema_type": "Article"
+      },
+      "pages": {
+        "title": "%title% | ShelzyPerkins",
+        "description": "%excerpt%",
+        "robots": "index, follow",
+        "schema_type": "WebPage"
+      },
+      "categories": {
+        "title": "%term% - Best Amazon Finds | ShelzyPerkins",
+        "description": "Discover the best %term% deals and recommendations on Amazon. Curated by ShelzyPerkins.",
+        "robots": "index, follow"
+      },
+      "separator": "|"
+    },
+    "sitemap": {
+      "enabled": true,
+      "include": {
+        "posts": true,
+        "pages": true,
+        "categories": true,
+        "tags": true
+      },
+      "exclude": {
+        "noindex": true,
+        "post_ids": [],
+        "term_ids": []
+      },
+      "ping_search_engines": true,
+      "images": true,
+      "videos": true
+    },
+    "schema": {
+      "organization": {
+        "type": "Organization",
+        "name": "ShelzyPerkins",
+        "url": "https://shelzyperkins.com",
+        "logo": "https://shelzyperkins.com/wp-content/themes/shelzyperkins-theme/assets/images/logo.png",
+        "social": {
+          "pinterest": "https://pinterest.com/shelzyperkins",
+          "instagram": "https://instagram.com/shelzyperkins",
+          "tiktok": "https://tiktok.com/@shelzyperkins"
+        }
+      },
+      "website": {
+        "name": "ShelzyPerkins",
+        "alternateName": "Shelzy Perkins Deals",
+        "url": "https://shelzyperkins.com"
+      },
+      "defaults": {
+        "post": "Article",
+        "page": "WebPage",
+        "product_review": "Product"
+      }
+    },
+    "localSeo": {
+      "enabled": false
+    },
+    "socialMeta": {
+      "facebook": {
+        "enabled": true,
+        "default_image": "https://shelzyperkins.com/wp-content/themes/shelzyperkins-theme/assets/images/og-default.jpg"
+      },
+      "twitter": {
+        "enabled": true,
+        "card_type": "summary_large_image",
+        "username": "@shelzyperkins"
+      },
+      "pinterest": {
+        "enabled": true,
+        "verify": "PINTEREST_VERIFICATION_CODE"
+      }
+    }
+  },
+  "robots_txt": "User-agent: *\nAllow: /\n\n# Block admin and login pages\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\n# Block search results\nDisallow: /?s=\nDisallow: /search/\n\n# Block feeds (optional)\n# Disallow: /feed/\n\n# Block trackbacks and comments\nDisallow: /trackback/\nDisallow: /comments/\n\n# Allow important resources\nAllow: /wp-admin/admin-ajax.php\nAllow: /wp-includes/*.js\nAllow: /wp-includes/*.css\nAllow: /wp-content/uploads/\nAllow: /wp-content/themes/*.js\nAllow: /wp-content/themes/*.css\n\n# Sitemap\nSitemap: https://shelzyperkins.com/sitemap_index.xml",
+  "internalLinking": {
+    "strategy": "topic_clusters",
+    "anchorText": {
+      "deals": ["daily deals", "today's deals", "best deals", "amazon deals"],
+      "beauty": ["beauty finds", "skincare", "makeup", "beauty dupes"],
+      "home": ["home decor", "organization", "kitchen finds", "home upgrades"],
+      "tech": ["tech gadgets", "electronics", "smart home"],
+      "fashion": ["fashion finds", "clothing", "accessories"]
+    },
+    "pillarPages": [
+      "/deals/",
+      "/best-of/",
+      "/gift-guides/",
+      "/category/beauty/",
+      "/category/home/",
+      "/category/tech/"
+    ]
+  },
+  "contentGuidelines": {
+    "minWordCount": 1500,
+    "headingsRequired": true,
+    "imagesRequired": 3,
+    "internalLinks": 3,
+    "externalLinks": 1,
+    "focusKeyword": true,
+    "metaDescription": {
+      "minLength": 120,
+      "maxLength": 156
+    }
+  }
+}
