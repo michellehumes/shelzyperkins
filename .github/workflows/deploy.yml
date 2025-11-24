@@ -1,0 +1,88 @@
+name: Deploy WordPress Theme
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wordpress-theme/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create theme package
+        run: |
+          cd wordpress-theme
+          zip -r ../shelzyperkins-theme.zip shelzyperkins-theme -x "*.DS_Store" -x "*__MACOSX*"
+          cd ..
+          echo "Theme package created successfully"
+          ls -la shelzyperkins-theme.zip
+
+      - name: Upload theme artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shelzyperkins-theme
+          path: shelzyperkins-theme.zip
+          retention-days: 30
+
+  deploy-ftp:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ vars.DEPLOY_METHOD == 'ftp' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./wordpress-theme/shelzyperkins-theme/
+          server-dir: ${{ secrets.FTP_PATH }}/wp-content/themes/shelzyperkins-theme/
+
+  deploy-ssh:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ vars.DEPLOY_METHOD == 'ssh' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: shelzyperkins-theme
+
+      - name: Deploy via SSH
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "wordpress-theme/shelzyperkins-theme/*"
+          target: ${{ secrets.SSH_PATH }}/wp-content/themes/
+          strip_components: 2
+
+      - name: Clear cache via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # Clear LiteSpeed Cache if available
+            cd ${{ secrets.SSH_PATH }}
+            if [ -d "wp-content/cache/litespeed" ]; then
+              rm -rf wp-content/cache/litespeed/*
+              echo "LiteSpeed cache cleared"
+            fi
+            # Clear object cache
+            wp cache flush --path=${{ secrets.SSH_PATH }} 2>/dev/null || true
+            echo "Deployment complete!"
