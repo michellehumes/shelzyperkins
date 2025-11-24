@@ -1,0 +1,145 @@
+{
+  "recommended_plugins": {
+    "seo": {
+      "name": "Rank Math SEO",
+      "slug": "seo-by-rank-math",
+      "settings": {
+        "general": {
+          "breadcrumbs": true,
+          "404_monitor": true,
+          "redirections": true
+        },
+        "titles_meta": {
+          "homepage_title": "ShelzyPerkins - Smart Deals & Real Savings on the Best Amazon Finds",
+          "homepage_description": "Discover the best Amazon deals, curated product recommendations, and money-saving tips. Your trusted source for smart shopping!",
+          "post_title": "%title% - ShelzyPerkins",
+          "separator": "|"
+        },
+        "sitemap": {
+          "enabled": true,
+          "post_types": ["post", "page"],
+          "exclude_posts": []
+        },
+        "schema": {
+          "organization_type": "Organization",
+          "organization_name": "ShelzyPerkins",
+          "default_schema_post": "Article",
+          "default_schema_page": "WebPage"
+        }
+      }
+    },
+    "caching": {
+      "name": "LiteSpeed Cache",
+      "slug": "litespeed-cache",
+      "alternative": "WP Super Cache",
+      "settings": {
+        "cache_enabled": true,
+        "browser_cache": true,
+        "object_cache": true,
+        "minify_css": true,
+        "minify_js": true,
+        "combine_css": true,
+        "combine_js": false,
+        "lazy_load_images": true,
+        "webp_replacement": true
+      }
+    },
+    "images": {
+      "name": "ShortPixel Image Optimizer",
+      "slug": "shortpixel-image-optimiser",
+      "alternative": "Smush",
+      "settings": {
+        "compression": "lossy",
+        "create_webp": true,
+        "resize_large": true,
+        "max_width": 2560
+      }
+    },
+    "security": {
+      "name": "Wordfence Security",
+      "slug": "wordfence",
+      "settings": {
+        "firewall_enabled": true,
+        "scan_schedule": "daily",
+        "brute_force_protection": true,
+        "two_factor": true
+      }
+    },
+    "forms": {
+      "name": "WPForms Lite",
+      "slug": "wpforms-lite",
+      "alternative": "Contact Form 7"
+    },
+    "email": {
+      "name": "Mailchimp for WordPress",
+      "slug": "mailchimp-for-wp",
+      "alternative": "ConvertKit",
+      "settings": {
+        "double_optin": true,
+        "update_existing": true
+      }
+    },
+    "social": {
+      "name": "Social Pug",
+      "slug": "social-pug",
+      "settings": {
+        "networks": ["pinterest", "facebook", "twitter"],
+        "floating_bar": true,
+        "position": "left"
+      }
+    },
+    "analytics": {
+      "name": "MonsterInsights",
+      "slug": "google-analytics-for-wordpress",
+      "alternative": "Site Kit by Google",
+      "settings": {
+        "enhanced_link_attribution": true,
+        "affiliate_link_tracking": true,
+        "outbound_link_tracking": true
+      }
+    },
+    "backup": {
+      "name": "UpdraftPlus",
+      "slug": "updraftplus",
+      "settings": {
+        "schedule_files": "weekly",
+        "schedule_database": "daily",
+        "retain_files": 4,
+        "retain_database": 14
+      }
+    },
+    "tables": {
+      "name": "TablePress",
+      "slug": "tablepress",
+      "purpose": "Product comparison tables"
+    },
+    "redirects": {
+      "name": "Redirection",
+      "slug": "redirection",
+      "purpose": "Managing expired product links"
+    }
+  },
+  "optional_plugins": {
+    "affiliate": {
+      "name": "Pretty Links",
+      "slug": "pretty-link",
+      "purpose": "Link cloaking and tracking"
+    },
+    "pinterest": {
+      "name": "Pinterest for WooCommerce",
+      "slug": "pinterest-for-woocommerce",
+      "purpose": "Rich pins and catalog sync"
+    },
+    "schema": {
+      "name": "Schema Pro",
+      "premium": true,
+      "purpose": "Advanced product schema"
+    }
+  },
+  "theme_requirements": {
+    "php_version": "7.4+",
+    "wordpress_version": "6.0+",
+    "memory_limit": "256M",
+    "max_upload_size": "64M"
+  }
+}

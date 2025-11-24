@@ -1,0 +1,141 @@
+<!-- Google Analytics 4 Setup Guide for ShelzyPerkins -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GA4 Setup Guide - ShelzyPerkins</title>
+</head>
+<body>
+
+<h1>Google Analytics 4 Setup for ShelzyPerkins.com</h1>
+
+<h2>Step 1: Create GA4 Property</h2>
+<ol>
+    <li>Go to <a href="https://analytics.google.com">analytics.google.com</a></li>
+    <li>Click Admin (gear icon)</li>
+    <li>Click "Create Property"</li>
+    <li>Property name: "ShelzyPerkins"</li>
+    <li>Time zone: Your timezone</li>
+    <li>Currency: USD</li>
+    <li>Click Next and select "Other" for business type</li>
+    <li>Select your business objectives (Generate leads, Drive sales)</li>
+</ol>
+
+<h2>Step 2: Data Stream Setup</h2>
+<ol>
+    <li>Select "Web" as platform</li>
+    <li>Website URL: https://shelzyperkins.com</li>
+    <li>Stream name: "ShelzyPerkins Web"</li>
+    <li>Enable Enhanced Measurement</li>
+    <li>Copy your Measurement ID (G-XXXXXXXXXX)</li>
+</ol>
+
+<h2>Step 3: Install Tracking Code</h2>
+
+<h3>Option A: Add to Theme Customizer</h3>
+<p>Go to Appearance > Customize > ShelzyPerkins Settings > Analytics and enter your GA4 ID.</p>
+
+<h3>Option B: Manual Installation</h3>
+<p>Add this code to your header.php before &lt;/head&gt;:</p>
+
+<pre><code>
+&lt;!-- Google Analytics 4 --&gt;
+&lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', {
+    'cookie_flags': 'SameSite=None;Secure'
+  });
+&lt;/script&gt;
+</code></pre>
+
+<h2>Step 4: Configure Custom Events</h2>
+
+<h3>Affiliate Link Clicks</h3>
+<p>The theme automatically tracks affiliate clicks. Configure the event in GA4:</p>
+<ol>
+    <li>Go to Admin > Events</li>
+    <li>Click "Create Event"</li>
+    <li>Event name: affiliate_click</li>
+    <li>Mark as conversion</li>
+</ol>
+
+<h3>Newsletter Signups</h3>
+<ol>
+    <li>Create event: newsletter_signup</li>
+    <li>Mark as conversion</li>
+</ol>
+
+<h2>Step 5: Enhanced Ecommerce (Optional)</h2>
+<p>For advanced tracking, enable the following events:</p>
+<ul>
+    <li>view_item - When product card is viewed</li>
+    <li>select_item - When product is clicked</li>
+    <li>add_to_cart - When affiliate link is clicked</li>
+</ul>
+
+<h2>Step 6: Create Custom Reports</h2>
+
+<h3>Affiliate Performance Report</h3>
+<ol>
+    <li>Go to Explore > Blank</li>
+    <li>Dimensions: Event name, Page path, Link type</li>
+    <li>Metrics: Event count, Users</li>
+    <li>Filter: Event name = affiliate_click</li>
+</ol>
+
+<h3>Top Converting Pages</h3>
+<ol>
+    <li>Dimensions: Page path</li>
+    <li>Metrics: Conversions, Sessions</li>
+    <li>Sort by Conversion rate</li>
+</ol>
+
+<h2>Step 7: Set Up Goals</h2>
+
+<table>
+    <tr>
+        <th>Goal</th>
+        <th>Type</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Affiliate Click</td>
+        <td>Event</td>
+        <td>$0.10</td>
+    </tr>
+    <tr>
+        <td>Newsletter Signup</td>
+        <td>Event</td>
+        <td>$1.00</td>
+    </tr>
+    <tr>
+        <td>Page Engagement</td>
+        <td>Engagement</td>
+        <td>$0.05</td>
+    </tr>
+</table>
+
+<h2>Step 8: Google Search Console Integration</h2>
+<ol>
+    <li>Go to Admin > Property Settings > Search Console Links</li>
+    <li>Click "Link"</li>
+    <li>Select your Search Console property</li>
+    <li>Complete the linking process</li>
+</ol>
+
+<h2>Verification Checklist</h2>
+<ul>
+    <li>[ ] GA4 tag firing on all pages</li>
+    <li>[ ] Real-time report showing visitors</li>
+    <li>[ ] Affiliate click events tracking</li>
+    <li>[ ] Newsletter signup events tracking</li>
+    <li>[ ] Search Console connected</li>
+    <li>[ ] Custom reports created</li>
+    <li>[ ] Data retention set (14 months recommended)</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+{
+  "brand": {
+    "name": "ShelzyPerkins",
+    "tagline": "Smart Deals • Real Savings",
+    "affiliateTag": "shelzysdesigns-20"
+  },
+  "colors": {
+    "primary": {
+      "coralRed": {
+        "hex": "#FF6B6B",
+        "rgb": "255, 107, 107",
+        "hsl": "0, 100%, 71%"
+      },
+      "sunnyYellow": {
+        "hex": "#FFE66D",
+        "rgb": "255, 230, 109",
+        "hsl": "50, 100%, 71%"
+      },
+      "charcoal": {
+        "hex": "#2D3436",
+        "rgb": "45, 52, 54",
+        "hsl": "193, 9%, 19%"
+      }
+    },
+    "secondary": {
+      "softGray": {
+        "hex": "#636E72",
+        "rgb": "99, 110, 114",
+        "hsl": "196, 7%, 42%"
+      },
+      "lightGray": {
+        "hex": "#B2BEC3",
+        "rgb": "178, 190, 195",
+        "hsl": "198, 13%, 73%"
+      },
+      "offWhite": {
+        "hex": "#F8F9FA",
+        "rgb": "248, 249, 250",
+        "hsl": "210, 14%, 98%"
+      },
+      "pureWhite": {
+        "hex": "#FFFFFF",
+        "rgb": "255, 255, 255",
+        "hsl": "0, 0%, 100%"
+      }
+    },
+    "functional": {
+      "success": {
+        "hex": "#00B894",
+        "rgb": "0, 184, 148",
+        "hsl": "168, 100%, 36%"
+      },
+      "warning": {
+        "hex": "#FDCB6E",
+        "rgb": "253, 203, 110",
+        "hsl": "39, 97%, 71%"
+      },
+      "info": {
+        "hex": "#74B9FF",
+        "rgb": "116, 185, 255",
+        "hsl": "210, 100%, 73%"
+      },
+      "error": {
+        "hex": "#E17055",
+        "rgb": "225, 112, 85",
+        "hsl": "12, 70%, 61%"
+      }
+    },
+    "amazon": {
+      "orange": {
+        "hex": "#FF9900",
+        "rgb": "255, 153, 0",
+        "hsl": "36, 100%, 50%"
+      },
+      "dark": {
+        "hex": "#111111",
+        "rgb": "17, 17, 17",
+        "hsl": "0, 0%, 7%"
+      }
+    }
+  },
+  "gradients": {
+    "brand": "linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%)",
+    "brandVertical": "linear-gradient(180deg, #FF6B6B 0%, #FFE66D 100%)",
+    "subtle": "linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%)",
+    "dark": "linear-gradient(135deg, #2D3436 0%, #636E72 100%)"
+  },
+  "shadows": {
+    "small": "0 2px 8px rgba(0, 0, 0, 0.08)",
+    "medium": "0 4px 20px rgba(0, 0, 0, 0.08)",
+    "large": "0 8px 30px rgba(0, 0, 0, 0.12)",
+    "brand": "0 4px 15px rgba(255, 107, 107, 0.3)",
+    "brandHover": "0 6px 20px rgba(255, 107, 107, 0.4)"
+  }
+}
