@@ -1,0 +1,77 @@
+# Copy/Paste This to Send to Comet
+
+---
+
+**Subject: Deploy & Optimize ShelzyPerkins.com - Full Affiliate Site Build**
+
+---
+
+Hi Comet,
+
+I need you to deploy a complete Amazon affiliate site that's already built and ready. Everything is in GitHub - you just need to install, optimize, and maximize revenue.
+
+**GOAL:** Transform ShelzyPerkins.com into a $2,000-5,000/month passive income site within 6 months.
+
+## Complete Instructions & Access
+
+See this file for EVERYTHING you need:
+**https://github.com/michellehumes/shelzyperkins/blob/claude/master-prompt-claude-code-012SmUq8hM87HCESott7tE5s/COMET-DEPLOYMENT-REQUEST.md**
+
+## Quick Summary
+
+**What's Ready:**
+- ✅ Complete WordPress theme (custom-built)
+- ✅ 10 ready-to-publish blog posts
+- ✅ 50 more post ideas
+- ✅ Branding package (logo, colors, guidelines)
+- ✅ Automation scripts (Pinterest, deals, email)
+- ✅ SEO configuration (RankMath, schema)
+- ✅ All pages (About, Contact, Privacy, Disclosure)
+
+**What You Need to Do:**
+1. Deploy theme to shelzyperkins.com
+2. Import all content
+3. Set up SEO & analytics
+4. Optimize for conversions
+5. Implement automation
+6. Launch Pinterest strategy
+
+**Timeline:** 7 days to full launch
+
+**Access Credentials:**
+- GoDaddy: https://sso.godaddy.com/?app=www
+- Email: michelle.e.humes@gmail.com
+- Password: Perkins@22
+- WordPress: shelzyperkins.com/wp-admin
+- GitHub Repo: https://github.com/michellehumes/shelzyperkins
+- Branch: claude/master-prompt-claude-code-012SmUq8hM87HCESott7tE5s
+
+**Affiliate Tag:** shelzysdesigns-20 (already configured everywhere)
+
+## Deliverables
+
+When done, provide:
+1. Live site URL
+2. List of all published posts
+3. Analytics dashboard link
+4. Pinterest account status
+5. Revenue tracking setup
+6. Ongoing maintenance plan
+
+## Expected Results
+
+- Month 1: $50-200 revenue
+- Month 3: $500-1,000/month
+- Month 6: $2,000-5,000/month
+
+## Questions?
+
+Everything is documented in the GitHub repo. The COMET-DEPLOYMENT-REQUEST.md file has 32 prioritized tasks, automation scripts, and complete profit optimization strategies.
+
+**Let's build a profitable affiliate business!**
+
+---
+
+Ready when you are. All files are in GitHub waiting for deployment.
+
+Thanks!
