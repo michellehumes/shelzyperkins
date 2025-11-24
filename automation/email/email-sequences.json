@@ -1,4 +1,93 @@
 {
+  "flashDealAlerts": {
+    "name": "Flash Deal Alerts",
+    "trigger": "price_drop_detected",
+    "priority": "high",
+    "sendTime": "immediately",
+    "templates": [
+      {
+        "id": "flash_deal_single",
+        "subject_templates": [
+          "🚨 PRICE DROP: {product_name} just dropped to ${new_price}!",
+          "⚡ Flash Deal: {percent_off}% OFF {product_name}",
+          "🔥 {product_name} is at its LOWEST PRICE EVER",
+          "⏰ Limited Time: {product_name} - ${savings} OFF"
+        ],
+        "content": {
+          "preheader": "This deal won't last long - {percent_off}% off right now!",
+          "body": "# 🚨 Price Drop Alert!\n\n**{product_name}** just dropped to its lowest price!\n\n## Deal Details\n\n- **Now:** ${new_price}\n- **Was:** ${old_price}\n- **You Save:** ${savings} ({percent_off}% OFF)\n\n[PRODUCT_IMAGE]\n\n⭐ {rating}/5 stars ({review_count} reviews)\n\n[SHOP NOW BUTTON]\n\n---\n\n### Why This Deal is Worth It\n\n{product_description}\n\n---\n\n⏰ **Deal Expires:** {expiry_time}\n\n*Prices can change at any time. We recommend grabbing this deal while it lasts!*\n\nHappy shopping!\n\nShelzy\n\nP.S. Want more deals like this? Make sure you're following me on [Pinterest](https://pinterest.com/shelzyperkins) for daily finds!"
+        }
+      },
+      {
+        "id": "flash_deal_roundup",
+        "subject_templates": [
+          "⚡ {count} Flash Deals Ending Tonight!",
+          "🔥 Today Only: Up to {max_discount}% OFF These Top Picks",
+          "⏰ Don't Miss These {count} Lightning Deals"
+        ],
+        "content": {
+          "preheader": "These deals expire at midnight - shop now!",
+          "body": "# ⚡ Flash Deals Expiring Soon!\n\nHey deal hunter!\n\nI found {count} amazing flash deals that are ending TONIGHT. Here are my top picks:\n\n[DEAL_1_CARD]\n[DEAL_2_CARD]\n[DEAL_3_CARD]\n[DEAL_4_CARD]\n[DEAL_5_CARD]\n\n---\n\n⏰ All deals expire at midnight EST!\n\nDon't sleep on these - Amazon flash deals sell out fast!\n\nXO,\nShelzy"
+        }
+      }
+    ]
+  },
+  "priceDropAlerts": {
+    "name": "Price Drop Alerts (Tracked Items)",
+    "trigger": "tracked_item_price_drop",
+    "templates": [
+      {
+        "id": "price_drop_wishlist",
+        "subject": "💰 Good news! {product_name} just dropped in price",
+        "content": {
+          "preheader": "The item you're watching is now ${new_price}",
+          "body": "# Great News! 🎉\n\nRemember that **{product_name}** you've been eyeing?\n\nIt just dropped in price!\n\n## Price History\n\n- **When you saved it:** ${saved_price}\n- **Current price:** ${new_price}\n- **All-time low:** ${lowest_price}\n\n{PRICE_INDICATOR}\n\n[SHOP NOW BUTTON]\n\n---\n\n*This is {price_position} - a {recommendation} time to buy!*\n\nHappy shopping!\nShelzy"
+        }
+      }
+    ]
+  },
+  "backInStockAlerts": {
+    "name": "Back in Stock Alerts",
+    "trigger": "item_back_in_stock",
+    "subject": "🔔 Back in Stock: {product_name}",
+    "content": {
+      "preheader": "The sold-out item you wanted is available again!",
+      "body": "# It's Back! 🎉\n\nThe **{product_name}** you were looking for is back in stock!\n\nThese tend to sell out quickly, so I wanted to give you a heads up.\n\n[PRODUCT_CARD]\n\n[SHOP NOW BUTTON]\n\n---\n\n*Pro tip: If you really want this item, don't wait - popular products can sell out again within hours!*\n\nShelzy"
+    }
+  },
+  "dailyDealsDigest": {
+    "name": "Daily Deals Digest",
+    "schedule": "every_day_7am",
+    "subject_templates": [
+      "☀️ Today's Best Amazon Deals ({date})",
+      "🌟 {count} Deals You'll Love Today",
+      "Good morning! Here are today's top deals"
+    ],
+    "content": {
+      "sections": [
+        {
+          "name": "top_deal",
+          "title": "🏆 Deal of the Day",
+          "description": "The best deal I found today"
+        },
+        {
+          "name": "under_25",
+          "title": "💰 Under $25",
+          "items": 3
+        },
+        {
+          "name": "trending",
+          "title": "🔥 Trending Now",
+          "items": 3
+        },
+        {
+          "name": "prime_exclusive",
+          "title": "⚡ Prime Exclusive",
+          "items": 2
+        }
+      ]
+    }
+  },
   "welcomeSequence": {
     "name": "Welcome Sequence",
     "trigger": "newsletter_signup",

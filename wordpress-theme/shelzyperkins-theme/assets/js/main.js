@@ -304,4 +304,269 @@
         });
     }
 
+    /**
+     * ==========================================================================
+     * EXIT INTENT POPUP
+     * ==========================================================================
+     */
+    (function initExitIntent() {
+        const popup = document.getElementById('sp-exit-popup');
+        if (!popup) return;
+
+        const overlay = popup.querySelector('.sp-exit-popup__overlay');
+        const closeBtn = popup.querySelector('.sp-exit-popup__close');
+        const form = popup.querySelector('.sp-exit-popup__form');
+
+        // Check if popup has been shown/dismissed
+        const hasSeenPopup = localStorage.getItem('sp_exit_popup_dismissed');
+        const lastShown = localStorage.getItem('sp_exit_popup_shown');
+        const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
+
+        // Don't show if dismissed or shown in last 24 hours
+        if (hasSeenPopup || (lastShown && parseInt(lastShown) > oneDayAgo)) {
+            return;
+        }
+
+        let popupShown = false;
+        let scrollTriggerEnabled = true;
+
+        // Exit intent detection (desktop)
+        document.addEventListener('mouseout', function(e) {
+            if (popupShown) return;
+
+            // Check if mouse is leaving through top of page
+            if (e.clientY < 10 && e.relatedTarget === null) {
+                showPopup();
+            }
+        });
+
+        // Scroll trigger (mobile fallback - show after 60% scroll)
+        window.addEventListener('scroll', function() {
+            if (popupShown || !scrollTriggerEnabled) return;
+
+            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+
+            if (scrollPercent > 60) {
+                // Delay popup slightly
+                setTimeout(function() {
+                    if (!popupShown) {
+                        showPopup();
+                    }
+                }, 2000);
+                scrollTriggerEnabled = false;
+            }
+        }, { passive: true });
+
+        // Time-based trigger (show after 45 seconds on page)
+        setTimeout(function() {
+            if (!popupShown) {
+                showPopup();
+            }
+        }, 45000);
+
+        function showPopup() {
+            popupShown = true;
+            popup.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+            localStorage.setItem('sp_exit_popup_shown', Date.now().toString());
+
+            // Track popup view
+            if (typeof gtag === 'function') {
+                gtag('event', 'exit_popup_shown', {
+                    'event_category': 'Engagement',
+                    'event_label': 'Exit Intent Popup'
+                });
+            }
+        }
+
+        function hidePopup() {
+            popup.classList.remove('is-active');
+            document.body.style.overflow = '';
+        }
+
+        function dismissPopup() {
+            hidePopup();
+            localStorage.setItem('sp_exit_popup_dismissed', 'true');
+        }
+
+        // Close handlers
+        closeBtn?.addEventListener('click', dismissPopup);
+        overlay?.addEventListener('click', dismissPopup);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popup.classList.contains('is-active')) {
+                dismissPopup();
+            }
+        });
+
+        // Form submission
+        form?.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const emailInput = this.querySelector('input[type="email"]');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const email = emailInput?.value;
+
+            if (!email) return;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Subscribing...';
+
+            // Simulate API call (replace with actual Mailchimp/ConvertKit integration)
+            setTimeout(function() {
+                submitBtn.textContent = 'Success!';
+                submitBtn.classList.add('success');
+
+                // Track conversion
+                if (typeof gtag === 'function') {
+                    gtag('event', 'exit_popup_signup', {
+                        'event_category': 'Conversion',
+                        'event_label': 'Exit Intent Email Capture'
+                    });
+                }
+
+                // Close popup after delay
+                setTimeout(function() {
+                    dismissPopup();
+                }, 1500);
+            }, 1000);
+        });
+    })();
+
+    /**
+     * ==========================================================================
+     * COUNTDOWN TIMERS
+     * ==========================================================================
+     */
+    (function initCountdowns() {
+        const countdowns = document.querySelectorAll('[data-countdown]');
+
+        countdowns.forEach(function(element) {
+            const endDate = new Date(element.dataset.countdown).getTime();
+            const timerDisplay = element.querySelector('.sp-countdown-timer');
+
+            if (!timerDisplay || !endDate) return;
+
+            function updateTimer() {
+                const now = Date.now();
+                const distance = endDate - now;
+
+                if (distance < 0) {
+                    timerDisplay.textContent = 'Expired';
+                    element.closest('.sp-deal-alert')?.classList.add('is-expired');
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                let timeString = '';
+                if (days > 0) {
+                    timeString = `${days}d ${hours}h ${minutes}m`;
+                } else if (hours > 0) {
+                    timeString = `${hours}h ${minutes}m ${seconds}s`;
+                } else {
+                    timeString = `${minutes}m ${seconds}s`;
+                }
+
+                timerDisplay.textContent = timeString;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        });
+    })();
+
+    /**
+     * ==========================================================================
+     * PRODUCT CARD VISIBILITY TRACKING
+     * ==========================================================================
+     */
+    (function initProductTracking() {
+        if (!('IntersectionObserver' in window)) return;
+
+        const productCards = document.querySelectorAll('.sp-product-card, .sp-bounty-card');
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !entry.target.dataset.viewed) {
+                    entry.target.dataset.viewed = 'true';
+
+                    const asin = entry.target.dataset.asin;
+                    const title = entry.target.querySelector('.sp-card__title, .sp-bounty-card__title')?.textContent;
+
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'view_item', {
+                            'event_category': 'Product',
+                            'event_label': asin || title || 'Unknown Product'
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        productCards.forEach(function(card) {
+            observer.observe(card);
+        });
+    })();
+
+    /**
+     * ==========================================================================
+     * PRICE HISTORY TOOLTIPS
+     * ==========================================================================
+     */
+    (function initPriceHistoryTooltips() {
+        const priceHistoryBars = document.querySelectorAll('.sp-price-history__bar');
+
+        priceHistoryBars.forEach(function(bar) {
+            bar.addEventListener('mouseenter', function() {
+                this.classList.add('is-hovered');
+            });
+
+            bar.addEventListener('mouseleave', function() {
+                this.classList.remove('is-hovered');
+            });
+        });
+    })();
+
+    /**
+     * ==========================================================================
+     * BOUNTY LINK CLICK TRACKING
+     * ==========================================================================
+     */
+    (function initBountyTracking() {
+        const bountyLinks = document.querySelectorAll('.sp-bounty-card a, .sp-bounty-banner a, .sp-bounty-inline');
+
+        bountyLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                const program = this.closest('.sp-bounty-card, .sp-bounty-banner')?.className.match(/sp-bounty-(?:card|banner)--(\w+)/)?.[1] || 'unknown';
+
+                if (typeof gtag === 'function') {
+                    gtag('event', 'bounty_click', {
+                        'event_category': 'Affiliate',
+                        'event_label': program,
+                        'transport_type': 'beacon'
+                    });
+                }
+
+                // Store in localStorage for attribution
+                const bountyClicks = JSON.parse(localStorage.getItem('sp_bounty_clicks') || '[]');
+                bountyClicks.push({
+                    program: program,
+                    timestamp: Date.now(),
+                    page: window.location.pathname
+                });
+
+                // Keep only last 50 clicks
+                if (bountyClicks.length > 50) {
+                    bountyClicks.shift();
+                }
+
+                localStorage.setItem('sp_bounty_clicks', JSON.stringify(bountyClicks));
+            });
+        });
+    })();
+
 })();
