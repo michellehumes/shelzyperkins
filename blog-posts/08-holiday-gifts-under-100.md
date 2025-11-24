@@ -10,6 +10,10 @@
 
 [affiliate_disclosure]
 
+[seasonal_cta season="christmas"]
+
+[deal_alert title="Holiday Shipping Deadline Approaching!" type="flash" description="Order soon for guaranteed delivery before Christmas!" expires="2024-12-20"]
+
 ## The Only Gift Guide You Need This Holiday Season
 
 Finding the perfect gift is stressful. I've done the research for you – these are the gifts that'll get genuine excitement, not polite smiles.
@@ -197,6 +201,20 @@ Soft, warm, and everyone actually uses them.
 2. **Check return policies** – Just in case
 3. **Save gift receipts** – Include them discreetly
 4. **When in doubt, go practical** – Useful > trendy
+
+---
+
+## Give the Gift of Entertainment
+
+Not sure what to get? These subscription trials make perfect last-minute gifts:
+
+[bounty_grid columns="2" exclude="amazon_fresh,amazon_business"]
+
+---
+
+## Get Free Shipping on All Your Gifts
+
+[bounty_card program="prime" style="banner"]
 
 ---
 

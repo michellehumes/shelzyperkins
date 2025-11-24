@@ -10,6 +10,8 @@
 
 [affiliate_disclosure]
 
+[quick_buy asin="B07GXQ3KMP" title="The Ordinary Niacinamide - Our #1 Pick" price="6.50" badge="Top Beauty Dupe"]
+
 ## Why Pay More for the Same Results?
 
 Let's be honest – some high-end beauty products are worth the splurge, but many aren't. After testing dozens of products, I've found these Amazon dupes that perform just as well (sometimes better!) than their expensive counterparts.
@@ -118,6 +120,18 @@ For everyday deep conditioning, this delivers similar results.
 You don't need to spend a fortune on beauty products. These Amazon dupes deliver the same (or better) results at a fraction of the price. The money you save can go toward other treats – or just stay in your pocket!
 
 **Total savings if you switch to all these dupes: Over $400!**
+
+---
+
+## Love Listening to Beauty Tips? Try Audible Free!
+
+[bounty_card program="audible" style="banner"]
+
+Looking for beauty podcasts, audiobooks on skincare science, or makeup tutorials? Try Audible free and get 2 audiobooks on us!
+
+---
+
+[seasonal_cta season="holiday" category="beauty"]
 
 ---
 
