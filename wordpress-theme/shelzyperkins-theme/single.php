@@ -47,6 +47,18 @@ get_header();
                     Updated: <?php echo get_the_modified_date(); ?>
                 </span>
                 <?php endif; ?>
+                <?php
+                $prices_verified = get_post_meta(get_the_ID(), '_sp_prices_verified', true);
+                if ($prices_verified):
+                ?>
+                <span class="sp-prices-verified">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Prices verified: <?php echo date('M j, Y', strtotime($prices_verified)); ?>
+                </span>
+                <?php endif; ?>
             </div>
         </div>
     </header>
@@ -112,6 +124,14 @@ get_header();
         </div>
     </footer>
 </article>
+
+<!-- Recently Viewed -->
+<section class="sp-recently-viewed">
+    <div class="sp-container">
+        <h3 class="sp-recently-viewed__title">Recently Viewed</h3>
+        <div class="sp-recently-viewed__list"></div>
+    </div>
+</section>
 
 <!-- Related Posts -->
 <section class="sp-section sp-related-posts">
