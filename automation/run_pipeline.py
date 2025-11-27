@@ -124,6 +124,11 @@ Examples:
         action="store_true",
         help="Skip Airtable operations"
     )
+    parser.add_argument(
+        "--no-wordpress",
+        action="store_true",
+        help="Skip WordPress publishing and save HTML to file"
+    )
 
     args = parser.parse_args()
 
@@ -162,6 +167,7 @@ Examples:
             draft=args.draft,
             env_file=args.env_file,
             skip_airtable=args.no_airtable,
+            skip_wordpress=args.no_wordpress,
         )
 
     # No valid mode selected
@@ -177,6 +183,7 @@ def run_single_post(
     draft: bool,
     env_file: str,
     skip_airtable: bool,
+    skip_wordpress: bool = False,
 ) -> int:
     """Run pipeline for a single post."""
     print("\n" + "=" * 60)
@@ -184,6 +191,80 @@ def run_single_post(
     print("=" * 60)
 
     pipeline = create_pipeline(env_file)
+
+    if skip_wordpress:
+        # Generate content without WordPress publishing
+        print("\nStep 1: Discovering products...")
+        products = pipeline.discover_products(keyword, niche, product_count)
+        print(f"  Found {len(products)} products")
+
+        print("Step 2: Generating blog post content...")
+        post = pipeline.generate_post(products, title, niche, keyword)
+        print(f"  Generated post: {post.slug}")
+
+        # Save HTML to file
+        output_dir = os.path.join(os.path.dirname(__file__), "output")
+        os.makedirs(output_dir, exist_ok=True)
+
+        html_file = os.path.join(output_dir, f"{post.slug}.html")
+        with open(html_file, "w") as f:
+            f.write(f"<!-- Title: {post.title} -->\n")
+            f.write(f"<!-- Meta Title: {post.meta_title} -->\n")
+            f.write(f"<!-- Meta Description: {post.meta_description} -->\n")
+            f.write(f"<!-- Tags: {', '.join(post.tags)} -->\n\n")
+            f.write(post.html_content)
+            f.write("\n\n")
+            f.write(post.schema_json)
+
+        print(f"Step 3: Saved HTML to: {html_file}")
+
+        # Generate distribution content
+        print("Step 4: Generating social media content...")
+        post_url = f"https://4hk.d7e.myftpupload.com/{post.slug}/"
+        distribution = pipeline.generate_distribution(post.slug, title, post_url, niche, products)
+
+        # Save distribution content
+        dist_file = os.path.join(output_dir, f"{post.slug}-social.txt")
+        with open(dist_file, "w") as f:
+            f.write("=" * 50 + "\n")
+            f.write("INSTAGRAM CAPTION\n")
+            f.write("=" * 50 + "\n")
+            f.write(distribution.instagram_caption + "\n\n")
+            f.write("=" * 50 + "\n")
+            f.write("TIKTOK CAPTION\n")
+            f.write("=" * 50 + "\n")
+            f.write(distribution.tiktok_caption + "\n\n")
+            f.write("=" * 50 + "\n")
+            f.write("PINTEREST PIN 1\n")
+            f.write("=" * 50 + "\n")
+            f.write(f"Title: {distribution.pinterest_title_1}\n")
+            f.write(f"Description: {distribution.pinterest_desc_1}\n\n")
+            f.write("=" * 50 + "\n")
+            f.write("EMAIL\n")
+            f.write("=" * 50 + "\n")
+            f.write(f"Subject: {distribution.email_subject}\n\n")
+            f.write(distribution.email_blurb + "\n")
+
+        print(f"  Saved social content to: {dist_file}")
+
+        # Save to Airtable if enabled
+        if not skip_airtable and pipeline.config.airtable.is_configured:
+            print("Step 5: Saving to Airtable...")
+            try:
+                record_ids = pipeline.save_products_to_airtable(products)
+                print(f"  Saved {len(record_ids)} products")
+                dist_id = pipeline.save_distribution_to_airtable(distribution)
+                print(f"  Saved distribution content")
+            except Exception as e:
+                print(f"  Airtable error: {e}")
+
+        print(f"\n{'='*60}")
+        print("SUCCESS!")
+        print(f"HTML file: {html_file}")
+        print(f"Social content: {dist_file}")
+        print(f"\nCopy the HTML content and paste it into WordPress!")
+        print(f"{'='*60}\n")
+        return 0
 
     status = "draft" if draft else "publish"
 
