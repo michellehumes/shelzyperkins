@@ -1,0 +1,23 @@
+# ShelzyPerkins Affiliate System Dependencies
+
+# HTTP requests
+requests>=2.28.0
+
+# Type hints and dataclasses (built-in for Python 3.7+)
+# No external dependencies needed
+
+# Optional: For enhanced PA-API support
+# boto3>=1.26.0  # If using AWS Signature V4 for PA-API
+
+# Optional: For scheduling
+# schedule>=1.1.0
+# apscheduler>=3.9.0
+
+# Optional: For async operations
+# aiohttp>=3.8.0
+# asyncio
+
+# Development dependencies (optional)
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=5.0.0
