@@ -1,0 +1,100 @@
+name: Generate Affiliate Post
+
+on:
+  schedule:
+    # Runs daily at 9 AM EST (2 PM UTC)
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    # Allows manual trigger from GitHub Actions tab
+    inputs:
+      title:
+        description: 'Post title'
+        required: false
+        default: ''
+      keyword:
+        description: 'Focus keyword'
+        required: false
+        default: ''
+      niche:
+        description: 'Niche (beauty, home, kitchen, tech, fashion, fitness, baby, pets)'
+        required: false
+        default: ''
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests python-dotenv
+
+      - name: Create .env file
+        run: |
+          cat > automation/.env << EOF
+          AIRTABLE_API_KEY=${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID=${{ secrets.AIRTABLE_BASE_ID }}
+          WORDPRESS_URL=${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME=${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD=${{ secrets.WORDPRESS_APP_PASSWORD }}
+          AMAZON_ASSOCIATE_TAG=${{ secrets.AMAZON_ASSOCIATE_TAG }}
+          EOF
+
+      - name: Generate post (scheduled - random topic)
+        if: github.event_name == 'schedule'
+        working-directory: automation
+        run: |
+          python -c "
+          import random
+          topics = [
+            ('Best Budget Skincare Products', 'budget skincare', 'beauty'),
+            ('Top Kitchen Gadgets Under \$50', 'kitchen gadgets', 'kitchen'),
+            ('Must-Have Home Organization Items', 'home organization', 'home'),
+            ('Best Tech Accessories 2025', 'tech accessories', 'tech'),
+            ('Affordable Fashion Finds', 'affordable fashion', 'fashion'),
+            ('Top Fitness Gear for Home Workouts', 'home workout gear', 'fitness'),
+            ('Best Baby Essentials for New Parents', 'baby essentials', 'baby'),
+            ('Top Pet Products on Amazon', 'pet products', 'pets'),
+            ('Best Amazon Beauty Dupes', 'beauty dupes', 'beauty'),
+            ('Kitchen Must-Haves for Meal Prep', 'meal prep essentials', 'kitchen'),
+          ]
+          title, keyword, niche = random.choice(topics)
+          print(f'TITLE={title}')
+          print(f'KEYWORD={keyword}')
+          print(f'NICHE={niche}')
+          " > /tmp/topic.txt
+
+          source /tmp/topic.txt
+          python run_pipeline.py --title "$TITLE" --keyword "$KEYWORD" --niche "$NICHE" --no-wordpress
+
+      - name: Generate post (manual trigger)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.title != ''
+        working-directory: automation
+        run: |
+          python run_pipeline.py \
+            --title "${{ github.event.inputs.title }}" \
+            --keyword "${{ github.event.inputs.keyword }}" \
+            --niche "${{ github.event.inputs.niche || 'beauty' }}" \
+            --no-wordpress
+
+      - name: Generate post (manual - random topic)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.title == ''
+        working-directory: automation
+        run: |
+          python run_pipeline.py --batch --no-wordpress
+
+      - name: Upload generated content
+        uses: actions/upload-artifact@v4
+        with:
+          name: affiliate-content-${{ github.run_number }}
+          path: automation/output/
+          retention-days: 30
