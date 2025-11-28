@@ -709,4 +709,319 @@
     // Export showToast for global use
     window.spShowToast = showToast;
 
+    /* ==========================================================================
+       SALES CONVERSION ENHANCEMENTS
+       New features to increase engagement and conversions
+       ========================================================================== */
+
+    // Initialize sales conversion features on DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+        initCountdownTimers();
+        initFloatingDealButton();
+        initSocialProof();
+        initStickyMobileCTA();
+        initSwipeCarousel();
+    });
+
+    /* ==========================================================================
+       Countdown Timer for Deals
+       ========================================================================== */
+    function initCountdownTimers() {
+        const countdowns = document.querySelectorAll('.sp-countdown[data-end-time]');
+
+        countdowns.forEach(function(countdown) {
+            const endTime = new Date(countdown.dataset.endTime).getTime();
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+
+                if (distance < 0) {
+                    countdown.innerHTML = '<span class="sp-countdown__expired">Deal Expired!</span>';
+                    return;
+                }
+
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                const timerHTML = `
+                    <span class="sp-countdown__label">⏰ Deal ends in</span>
+                    <div class="sp-countdown__timer">
+                        <div class="sp-countdown__block">
+                            <span class="sp-countdown__number">${String(hours).padStart(2, '0')}</span>
+                            <span class="sp-countdown__unit">Hours</span>
+                        </div>
+                        <span class="sp-countdown__separator">:</span>
+                        <div class="sp-countdown__block">
+                            <span class="sp-countdown__number">${String(minutes).padStart(2, '0')}</span>
+                            <span class="sp-countdown__unit">Mins</span>
+                        </div>
+                        <span class="sp-countdown__separator">:</span>
+                        <div class="sp-countdown__block">
+                            <span class="sp-countdown__number">${String(seconds).padStart(2, '0')}</span>
+                            <span class="sp-countdown__unit">Secs</span>
+                        </div>
+                    </div>
+                `;
+
+                countdown.innerHTML = timerHTML;
+            }
+
+            updateCountdown();
+            const intervalId = setInterval(updateCountdown, 1000);
+            
+            // Store interval ID for cleanup
+            countdown.dataset.intervalId = intervalId;
+        });
+    }
+
+    /* ==========================================================================
+       Floating Deal Button
+       ========================================================================== */
+    function initFloatingDealButton() {
+        // Only show on blog posts and deal pages
+        if (!document.body.classList.contains('single-post') && 
+            !document.body.classList.contains('page-template-deals')) {
+            return;
+        }
+
+        // Find the first Amazon link on the page
+        const firstDeal = document.querySelector('.sp-btn--amazon, a[href*="amazon.com"]');
+        if (!firstDeal) return;
+
+        const floatingBtn = document.createElement('div');
+        floatingBtn.className = 'sp-floating-deal';
+        floatingBtn.innerHTML = `
+            <a href="${firstDeal.href}" class="sp-floating-deal__btn" target="_blank" rel="nofollow sponsored noopener">
+                <span class="sp-floating-deal__icon">🔥</span>
+                <span>Today's Best Deal</span>
+            </a>
+            <button class="sp-floating-deal__close" aria-label="Close">&times;</button>
+        `;
+
+        document.body.appendChild(floatingBtn);
+
+        // Show after scrolling down
+        let isVisible = false;
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 500 && !isVisible) {
+                floatingBtn.style.opacity = '1';
+                floatingBtn.style.visibility = 'visible';
+                isVisible = true;
+            } else if (window.pageYOffset <= 500 && isVisible) {
+                floatingBtn.style.opacity = '0';
+                floatingBtn.style.visibility = 'hidden';
+                isVisible = false;
+            }
+        }, { passive: true });
+
+        // Close button
+        floatingBtn.querySelector('.sp-floating-deal__close').addEventListener('click', function(e) {
+            e.preventDefault();
+            floatingBtn.remove();
+            sessionStorage.setItem('sp_floating_closed', 'true');
+        });
+
+        // Check if previously closed
+        if (sessionStorage.getItem('sp_floating_closed')) {
+            floatingBtn.remove();
+        }
+
+        // Track clicks
+        floatingBtn.querySelector('.sp-floating-deal__btn').addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'floating_deal_click', {
+                    event_category: 'Conversion',
+                    event_label: 'Floating Deal Button'
+                });
+            }
+        });
+    }
+
+    /* ==========================================================================
+       Social Proof Notifications
+       ========================================================================== */
+    function initSocialProof() {
+        // Only show on pages with products
+        if (!document.querySelector('.sp-product-card, .sp-card[data-asin]')) {
+            return;
+        }
+
+        const proofMessages = [
+            { name: 'Sarah', location: 'Texas', action: 'just purchased', time: '2 minutes ago' },
+            { name: 'Mike', location: 'California', action: 'is viewing this deal', time: 'now' },
+            { name: 'Emma', location: 'New York', action: 'added to cart', time: '5 minutes ago' },
+            { name: 'John', location: 'Florida', action: 'just saved 40%', time: '8 minutes ago' },
+            { name: 'Lisa', location: 'Illinois', action: 'just purchased', time: '12 minutes ago' },
+        ];
+
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'sp-social-notification';
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            max-width: 320px;
+        `;
+
+        document.body.appendChild(notification);
+
+        let currentIndex = 0;
+        let showCount = 0;
+        const maxShows = 3;
+
+        function showNotification() {
+            if (showCount >= maxShows) return;
+
+            const proof = proofMessages[currentIndex];
+            notification.innerHTML = `
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #FF6B6B, #FFE66D); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                    ${proof.name.charAt(0)}
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">${proof.name} from ${proof.location}</div>
+                    <div style="font-size: 12px; color: #666;">${proof.action} <span style="color: #999;">${proof.time}</span></div>
+                </div>
+            `;
+
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateY(0)';
+
+            setTimeout(function() {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+            }, 4000);
+
+            currentIndex = (currentIndex + 1) % proofMessages.length;
+            showCount++;
+        }
+
+        // Show first notification after 10 seconds, then every 30 seconds
+        setTimeout(function() {
+            showNotification();
+            setInterval(showNotification, 30000);
+        }, 10000);
+    }
+
+    /* ==========================================================================
+       Sticky Mobile CTA
+       ========================================================================== */
+    function initStickyMobileCTA() {
+        // Only on single posts on mobile
+        if (!document.body.classList.contains('single-post') || window.innerWidth > 768) {
+            return;
+        }
+
+        const firstProduct = document.querySelector('.sp-product-card, .sp-card[data-asin]');
+        if (!firstProduct) return;
+
+        const price = firstProduct.querySelector('.sp-card__price-current')?.textContent || '';
+        const originalPrice = firstProduct.querySelector('.sp-card__price-original')?.textContent || '';
+        const asin = firstProduct.dataset.asin || '';
+        const title = firstProduct.querySelector('.sp-card__title')?.textContent || 'Product';
+
+        // Validate ASIN format (10 alphanumeric characters)
+        if (!asin || !/^[A-Z0-9]{10}$/i.test(asin)) return;
+
+        // Escape text content to prevent XSS
+        const escapeHtml = function(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        };
+
+        const stickyCTA = document.createElement('div');
+        stickyCTA.className = 'sp-sticky-cta';
+        stickyCTA.innerHTML = `
+            <div class="sp-sticky-cta__inner">
+                <div class="sp-sticky-cta__info">
+                    <span class="sp-sticky-cta__price">${escapeHtml(price)}</span>
+                    ${originalPrice ? `<span class="sp-sticky-cta__price-original">${escapeHtml(originalPrice)}</span>` : ''}
+                </div>
+                <a href="https://www.amazon.com/dp/${encodeURIComponent(asin)}?tag=${encodeURIComponent(spData?.affiliateTag || 'shelzysdesigns-20')}" 
+                   class="sp-btn sp-btn--amazon sp-sticky-cta__btn" 
+                   target="_blank" 
+                   rel="nofollow sponsored noopener">
+                    View on Amazon
+                </a>
+            </div>
+        `;
+
+        document.body.appendChild(stickyCTA);
+
+        // Show/hide based on scroll
+        let lastScrollY = 0;
+        window.addEventListener('scroll', function() {
+            const currentScrollY = window.pageYOffset;
+            const productRect = firstProduct.getBoundingClientRect();
+
+            // Show when product is above viewport
+            if (productRect.bottom < 0) {
+                stickyCTA.classList.add('is-visible');
+            } else {
+                stickyCTA.classList.remove('is-visible');
+            }
+
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+
+        // Track clicks
+        stickyCTA.querySelector('.sp-sticky-cta__btn').addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'sticky_cta_click', {
+                    event_category: 'Conversion',
+                    event_label: title
+                });
+            }
+        });
+    }
+
+    /* ==========================================================================
+       Swipe Carousel for Mobile
+       ========================================================================== */
+    function initSwipeCarousel() {
+        const carousels = document.querySelectorAll('.sp-swipe-carousel');
+
+        carousels.forEach(function(carousel) {
+            const items = carousel.children;
+            if (items.length < 2) return;
+
+            // Create indicators
+            const indicatorContainer = document.createElement('div');
+            indicatorContainer.className = 'sp-swipe-indicators';
+
+            for (let i = 0; i < items.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'sp-swipe-indicator' + (i === 0 ? ' is-active' : '');
+                indicatorContainer.appendChild(indicator);
+            }
+
+            carousel.parentNode.insertBefore(indicatorContainer, carousel.nextSibling);
+
+            // Update indicators on scroll
+            carousel.addEventListener('scroll', function() {
+                const scrollLeft = carousel.scrollLeft;
+                const itemWidth = items[0].offsetWidth + 16; // including gap
+                const activeIndex = Math.round(scrollLeft / itemWidth);
+
+                indicatorContainer.querySelectorAll('.sp-swipe-indicator').forEach(function(ind, i) {
+                    ind.classList.toggle('is-active', i === activeIndex);
+                });
+            }, { passive: true });
+        });
+    }
+
 })();
