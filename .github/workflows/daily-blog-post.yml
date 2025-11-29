@@ -1,0 +1,321 @@
+# GitHub Actions Workflow: Automated Daily Blog Post Generation
+# Runs every day at 5 AM EST to create daily deals blog posts
+# Uses templates and deal data to generate fresh content
+
+name: Daily Blog Post Generator
+
+on:
+  schedule:
+    # Run at 5 AM EST (10:00 UTC) every day
+    - cron: '0 10 * * *'
+    # Run at 5 AM EST on Sundays for weekly roundup
+    - cron: '0 10 * * 0'
+  workflow_dispatch:
+    inputs:
+      post_type:
+        description: 'Type of post to generate'
+        required: true
+        default: 'daily-deals'
+        type: choice
+        options:
+          - daily-deals
+          - weekly-roundup
+          - flash-deals
+      categories:
+        description: 'Categories to include (comma-separated)'
+        required: false
+        default: 'beauty,home,tech,fashion,kitchen'
+
+env:
+  NODE_VERSION: '18'
+  AFFILIATE_TAG: 'shelzysdesigns-20'
+
+# Set minimal permissions for security
+permissions:
+  contents: write  # Needed to push commits
+
+jobs:
+  generate-daily-post:
+    name: Generate Daily Blog Post
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'automation/package.json'
+
+      - name: Install Dependencies
+        working-directory: ./automation
+        run: |
+          if [ -f "package.json" ]; then
+            npm ci || npm install
+          else
+            echo "No package.json found, using built-in scripts"
+          fi
+
+      - name: Set Date Variables
+        id: date
+        run: |
+          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "date_formatted=$(date +'%B %d, %Y')" >> $GITHUB_OUTPUT
+          echo "date_slug=$(date +'%m-%d-%Y')" >> $GITHUB_OUTPUT
+          echo "weekday=$(date +'%A')" >> $GITHUB_OUTPUT
+          echo "time_updated=$(date +'%I:%M %p EST')" >> $GITHUB_OUTPUT
+
+      - name: Generate Daily Deals Post
+        id: generate
+        run: |
+          # Create the blog post content using the template
+          cat > "blog-posts/daily-deals-${{ steps.date.outputs.date_slug }}.md" << 'ENDOFPOST'
+          # Today's Daily Deals: ${{ steps.date.outputs.date_formatted }} (Updated Live)
+
+          **Meta Title:** Today's Best Amazon Deals ${{ steps.date.outputs.date_formatted }} | Daily Deal Roundup
+          **Meta Description:** Don't miss today's best Amazon deals! I handpick the hottest discounts updated throughout the day. Bookmark and check back often!
+          **Categories:** Deals, Daily Deals
+          **Tags:** daily deals, amazon deals, flash sales, today only, limited time, ${{ steps.date.outputs.weekday }} deals
+          **Featured Image:** daily-deals-featured.jpg
+
+          ---
+
+          [affiliate_disclosure short="true"]
+
+          **Last Updated: ${{ steps.date.outputs.time_updated }}** | *I update this page multiple times daily. Refresh for the latest deals!*
+
+          ---
+
+          [quick_picks title="⚡ Today's Top 3 Picks" best="Top Deal of the Day|PLACEHOLDER|See Price" budget="Best Budget Find|PLACEHOLDER|Under $25" premium="Premium Pick|PLACEHOLDER|Worth It"]
+
+          ---
+
+          ## 🔥 Today's Top Picks
+
+          These are the deals I'm most excited about today. Grab them before they're gone!
+
+          ### [deal_badge text="TOP DEAL" type="hot"] Deal of the Day
+
+          [product_card asin="PLACEHOLDER_ASIN" title="Featured Product" price="XX.XX" original_price="XX.XX" image="PLACEHOLDER_IMAGE" badge="XX% OFF"]
+
+          **Why I love it:** This is today's standout deal - incredible value with amazing reviews!
+
+          **Hurry:** This deal expires at midnight EST!
+
+          [amazon_link asin="PLACEHOLDER_ASIN" text="🛒 Grab This Deal"]
+
+          [price_history asin="PLACEHOLDER_ASIN" current="XX.XX" high="XX.XX" low="XX.XX" avg="XX.XX"]
+
+          ---
+
+          ## ⚡ Lightning Deals (Time-Sensitive!)
+
+          *These deals have limited quantities. When they're gone, they're gone!*
+
+          ### 1. Lightning Deal - Beauty
+
+          [product_card asin="PLACEHOLDER" title="Beauty Product" price="XX.XX" original_price="XX.XX" image="PLACEHOLDER" badge="Lightning"]
+
+          [stock_status status="low" count="5"]
+
+          ---
+
+          ### 2. Lightning Deal - Home
+
+          [product_card asin="PLACEHOLDER" title="Home Product" price="XX.XX" original_price="XX.XX" image="PLACEHOLDER" badge="Lightning"]
+
+          [stock_status status="low" count="8"]
+
+          ---
+
+          ## 📦 Category Deals
+
+          ### 💄 Beauty & Personal Care
+
+          [comparison_table]
+          [product_row asin="PLACEHOLDER" title="Skincare Essential" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Haircare Must-Have" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Makeup Find" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [/comparison_table]
+
+          ---
+
+          ### 🏠 Home & Kitchen
+
+          [comparison_table]
+          [product_row asin="PLACEHOLDER" title="Kitchen Gadget" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Organization Item" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Home Decor" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [/comparison_table]
+
+          ---
+
+          ### 💻 Tech & Electronics
+
+          [comparison_table]
+          [product_row asin="PLACEHOLDER" title="Smart Device" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Accessory" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Gadget" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [/comparison_table]
+
+          ---
+
+          ### 👗 Fashion & Accessories
+
+          [comparison_table]
+          [product_row asin="PLACEHOLDER" title="Clothing Item" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Accessory" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [product_row asin="PLACEHOLDER" title="Shoes" price="XX.XX" image="PLACEHOLDER" note="XX% OFF"]
+          [/comparison_table]
+
+          ---
+
+          ## 📉 Price Drops I'm Watching
+
+          Products that just dropped in price:
+
+          - **Product 1:** Was $XX → Now $XX (X% off!)
+          - **Product 2:** Was $XX → Now $XX (X% off!)
+          - **Product 3:** Was $XX → Now $XX (X% off!)
+
+          [price_alert asin="PLACEHOLDER" product="a product you're watching" current_price="XX.XX"]
+
+          ---
+
+          ## ❓ Frequently Asked Questions
+
+          [faq_section]
+          [faq question="How often do you update this page?"]
+          I update this page multiple times daily! I check for new deals in the morning, afternoon, and evening. Bookmark this page and check back often for the freshest finds.
+          [/faq]
+
+          [faq question="Are these really the best prices?"]
+          Yes! I verify all prices using price tracking tools and only share deals that are genuinely good. I never promote artificially inflated "sales."
+          [/faq]
+
+          [faq question="What if a deal is sold out?"]
+          Amazon deals move fast! If something's sold out, check back soon - similar deals often pop up. You can also set up a price alert above to be notified of future drops.
+          [/faq]
+
+          [faq question="Do you earn money from these links?"]
+          Yes, I earn a small commission when you purchase through my links at no extra cost to you. This helps me continue finding great deals for you!
+          [/faq]
+          [/faq_section]
+
+          ---
+
+          ## 📧 Never Miss a Deal
+
+          [email_signup title="Get Daily Deal Alerts 🔔" description="Want the best deals delivered straight to your inbox? Subscribe for daily updates and exclusive finds!"]
+
+          ---
+
+          ## 📅 Missed Yesterday's Deals?
+
+          Check out [yesterday's deals roundup](/daily-deals/) – some may still be active!
+
+          ---
+
+          *Have a deal you think I should feature? [Contact me](/contact/) with the link!*
+
+          ---
+
+          **Disclaimer:** Prices and availability change rapidly. Always verify the current price on Amazon before purchasing. Last verified: ${{ steps.date.outputs.time_updated }}
+
+          ENDOFPOST
+
+          echo "post_file=blog-posts/daily-deals-${{ steps.date.outputs.date_slug }}.md" >> $GITHUB_OUTPUT
+          echo "Post generated successfully!"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "ShelzyPerkins Bot"
+          git add blog-posts/
+          git diff --staged --quiet || git commit -m "📝 Add daily deals post for ${{ steps.date.outputs.date_formatted }}"
+          git push
+
+      - name: Create Summary
+        run: |
+          echo "## 📝 Daily Blog Post Generated!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** ${{ steps.date.outputs.date_formatted }}" >> $GITHUB_STEP_SUMMARY
+          echo "**File:** \`${{ steps.generate.outputs.post_file }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Edit the post to add real product ASINs and prices" >> $GITHUB_STEP_SUMMARY
+          echo "2. Upload to WordPress" >> $GITHUB_STEP_SUMMARY
+          echo "3. Share on social media" >> $GITHUB_STEP_SUMMARY
+
+  # Weekly roundup job - runs every Sunday
+  generate-weekly-roundup:
+    name: Generate Weekly Roundup
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.event.schedule == '0 10 * * 0' || (github.event_name == 'workflow_dispatch' && inputs.post_type == 'weekly-roundup')
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Date Variables
+        id: date
+        run: |
+          echo "week_start=$(date -d 'last sunday' +'%B %d')" >> $GITHUB_OUTPUT
+          echo "week_end=$(date +'%B %d, %Y')" >> $GITHUB_OUTPUT
+          echo "date_slug=$(date +'%Y-W%V')" >> $GITHUB_OUTPUT
+
+      - name: Generate Weekly Roundup Post
+        run: |
+          cat > "blog-posts/weekly-roundup-${{ steps.date.outputs.date_slug }}.md" << 'ENDOFPOST'
+          # This Week's Best Deals Roundup: ${{ steps.date.outputs.week_start }} - ${{ steps.date.outputs.week_end }}
+
+          **Meta Title:** Best Amazon Deals This Week | Weekly Roundup ${{ steps.date.outputs.week_end }}
+          **Meta Description:** Catch up on this week's best Amazon deals! From beauty to tech, here are the top finds you might have missed.
+          **Categories:** Deals, Weekly Roundup
+          **Tags:** weekly deals, best of week, deal roundup, amazon finds
+
+          ---
+
+          [affiliate_disclosure short="true"]
+
+          ## 🏆 This Week's Biggest Wins
+
+          Here's a roundup of the best deals from this week. Some may still be active!
+
+          [quick_picks title="Week's Top Picks" best="Best Overall Deal|PLACEHOLDER|Was Top Seller" budget="Best Budget Find|PLACEHOLDER|Under $20" premium="Biggest Savings|PLACEHOLDER|50%+ Off"]
+
+          ---
+
+          ## Category Highlights
+
+          ### Beauty Favorites
+          [List top 3 beauty deals of the week]
+
+          ### Home Must-Haves
+          [List top 3 home deals of the week]
+
+          ### Tech Steals
+          [List top 3 tech deals of the week]
+
+          ---
+
+          [email_signup title="Get Next Week's Deals First!" description="Subscribe to receive weekly deal roundups and be the first to know about upcoming sales."]
+
+          ENDOFPOST
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "ShelzyPerkins Bot"
+          git add blog-posts/
+          git diff --staged --quiet || git commit -m "📝 Add weekly roundup for ${{ steps.date.outputs.week_end }}"
+          git push

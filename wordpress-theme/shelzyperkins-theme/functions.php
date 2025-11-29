@@ -1073,3 +1073,294 @@ function sp_enqueue_improvement_assets() {
     wp_enqueue_script('sp-improvements', SP_THEME_URI . '/assets/js/improvements.js', array('sp-main'), SP_THEME_VERSION, true);
 }
 add_action('wp_enqueue_scripts', 'sp_enqueue_improvement_assets');
+
+/* ==========================================================================
+   SALES CONVERSION SHORTCODES
+   Additional shortcodes to improve conversions and aesthetics
+   ========================================================================== */
+
+/**
+ * Shortcode: Countdown Timer
+ * Usage: [countdown hours="12"] or [countdown end_time="2024-12-31 23:59:59"]
+ */
+function sp_countdown_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'hours'    => '',
+        'end_time' => '',
+        'label'    => 'Deal ends in',
+    ), $atts);
+
+    // Calculate end time
+    if (!empty($atts['hours'])) {
+        $end_time = date('c', strtotime('+' . intval($atts['hours']) . ' hours'));
+    } elseif (!empty($atts['end_time'])) {
+        $end_time = date('c', strtotime($atts['end_time']));
+    } else {
+        // Default to midnight tonight
+        $end_time = date('c', strtotime('tomorrow midnight'));
+    }
+
+    ob_start();
+    ?>
+    <div class="sp-countdown" data-end-time="<?php echo esc_attr($end_time); ?>">
+        <span class="sp-countdown__label">⏰ <?php echo esc_html($atts['label']); ?></span>
+        <div class="sp-countdown__timer">
+            <div class="sp-countdown__block">
+                <span class="sp-countdown__number">--</span>
+                <span class="sp-countdown__unit">Hours</span>
+            </div>
+            <span class="sp-countdown__separator">:</span>
+            <div class="sp-countdown__block">
+                <span class="sp-countdown__number">--</span>
+                <span class="sp-countdown__unit">Mins</span>
+            </div>
+            <span class="sp-countdown__separator">:</span>
+            <div class="sp-countdown__block">
+                <span class="sp-countdown__number">--</span>
+                <span class="sp-countdown__unit">Secs</span>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('countdown', 'sp_countdown_shortcode');
+
+/**
+ * Shortcode: Trust Badges
+ * Usage: [trust_badges]
+ */
+function sp_trust_badges_shortcode($atts) {
+    ob_start();
+    ?>
+    <div class="sp-trust-badges">
+        <div class="sp-trust-badge sp-trust-badge--verified">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Verified Deals</span>
+        </div>
+        <div class="sp-trust-badge sp-trust-badge--secure">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>Secure Shopping</span>
+        </div>
+        <div class="sp-trust-badge sp-trust-badge--fast">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span>Prime Eligible</span>
+        </div>
+        <div class="sp-trust-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Updated Daily</span>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('trust_badges', 'sp_trust_badges_shortcode');
+
+/**
+ * Shortcode: Limited Time Banner
+ * Usage: [limited_banner text="Flash Sale! Extra 20% off today only!" link="/deals/"]
+ */
+function sp_limited_banner_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'text' => '🔥 Limited Time Deal - Ends Tonight!',
+        'link' => '',
+        'link_text' => 'Shop Now →',
+    ), $atts);
+
+    ob_start();
+    ?>
+    <div class="sp-limited-banner">
+        <?php echo esc_html($atts['text']); ?>
+        <?php if (!empty($atts['link'])): ?>
+        <a href="<?php echo esc_url($atts['link']); ?>"><?php echo esc_html($atts['link_text']); ?></a>
+        <?php endif; ?>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('limited_banner', 'sp_limited_banner_shortcode');
+
+/**
+ * Shortcode: Social Proof
+ * Usage: [social_proof count="127" text="people bought this today"]
+ */
+function sp_social_proof_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'count' => '89',
+        'text'  => 'people are viewing this right now',
+    ), $atts);
+
+    ob_start();
+    ?>
+    <div class="sp-social-proof">
+        <div class="sp-social-proof__avatars">
+            <span class="sp-social-proof__avatar">S</span>
+            <span class="sp-social-proof__avatar">M</span>
+            <span class="sp-social-proof__avatar">E</span>
+            <span class="sp-social-proof__avatar">+<?php echo intval($atts['count']) - 3; ?></span>
+        </div>
+        <span class="sp-social-proof__text">
+            <strong><?php echo intval($atts['count']); ?></strong> <?php echo esc_html($atts['text']); ?>
+        </span>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('social_proof', 'sp_social_proof_shortcode');
+
+/**
+ * Shortcode: Flash Sale Badge
+ * Usage: [flash_sale text="Flash Sale"]
+ */
+function sp_flash_sale_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'text' => '⚡ Flash Sale',
+    ), $atts);
+
+    return '<span class="sp-flash-sale">' . esc_html($atts['text']) . '</span>';
+}
+add_shortcode('flash_sale', 'sp_flash_sale_shortcode');
+
+/**
+ * Shortcode: Verified Purchase Badge
+ * Usage: [verified_purchase]
+ */
+function sp_verified_purchase_shortcode($atts) {
+    return '<span class="sp-verified-purchase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Verified Purchase</span>';
+}
+add_shortcode('verified_purchase', 'sp_verified_purchase_shortcode');
+
+/**
+ * Shortcode: Star Rating
+ * Usage: [star_rating rating="4.5" count="1,234"]
+ */
+function sp_star_rating_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'rating' => '5',
+        'count'  => '',
+    ), $atts);
+
+    $rating = floatval($atts['rating']);
+    $full_stars = floor($rating);
+    $half_star = ($rating - $full_stars) >= 0.5;
+    $empty_stars = 5 - $full_stars - ($half_star ? 1 : 0);
+
+    ob_start();
+    ?>
+    <div class="sp-rating" style="display: inline-flex; align-items: center; gap: 4px;">
+        <div class="sp-stars">
+            <?php for ($i = 0; $i < $full_stars; $i++): ?>
+            <svg class="sp-star sp-star--filled" width="16" height="16" viewBox="0 0 24 24" fill="#FFD700" stroke="#FFD700">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <?php endfor; ?>
+            <?php if ($half_star): ?>
+            <svg class="sp-star sp-star--half" width="16" height="16" viewBox="0 0 24 24">
+                <defs>
+                    <linearGradient id="half">
+                        <stop offset="50%" stop-color="#FFD700"/>
+                        <stop offset="50%" stop-color="#DFE6E9"/>
+                    </linearGradient>
+                </defs>
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#half)" stroke="#FFD700"/>
+            </svg>
+            <?php endif; ?>
+            <?php for ($i = 0; $i < $empty_stars; $i++): ?>
+            <svg class="sp-star" width="16" height="16" viewBox="0 0 24 24" fill="#DFE6E9" stroke="#DFE6E9">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <?php endfor; ?>
+        </div>
+        <span style="font-weight: 600; font-size: 14px;"><?php echo esc_html($rating); ?></span>
+        <?php if (!empty($atts['count'])): ?>
+        <span style="color: #666; font-size: 14px;">(<?php echo esc_html($atts['count']); ?>)</span>
+        <?php endif; ?>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('star_rating', 'sp_star_rating_shortcode');
+
+/**
+ * Shortcode: Swipe Carousel
+ * Usage: [swipe_carousel]...[/swipe_carousel]
+ */
+function sp_swipe_carousel_shortcode($atts, $content = null) {
+    if (!$content) return '';
+
+    ob_start();
+    ?>
+    <div class="sp-swipe-carousel">
+        <?php echo do_shortcode($content); ?>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('swipe_carousel', 'sp_swipe_carousel_shortcode');
+
+/**
+ * Shortcode: Animated Hero Section
+ * Usage: [animated_hero title="Smart Deals" subtitle="Real Savings"]
+ */
+function sp_animated_hero_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'title'       => 'Smart Deals. Real Savings.',
+        'subtitle'    => 'Discover the best Amazon finds, curated product recommendations, and money-saving tips.',
+        'btn_text'    => "Browse Today's Deals",
+        'btn_link'    => '/deals/',
+        'btn2_text'   => 'Shop My Storefront',
+        'btn2_link'   => 'https://www.amazon.com/shop/shelzyperkins?tag=shelzysdesigns-20',
+    ), $atts);
+
+    ob_start();
+    ?>
+    <section class="sp-hero sp-hero--animated">
+        <div class="sp-container">
+            <h1 class="sp-hero__title"><?php echo esc_html($atts['title']); ?></h1>
+            <p class="sp-hero__subtitle"><?php echo esc_html($atts['subtitle']); ?></p>
+            <div class="sp-hero__cta">
+                <a href="<?php echo esc_url($atts['btn_link']); ?>" class="sp-btn sp-btn--primary sp-btn--lg sp-btn--pulse">
+                    <?php echo esc_html($atts['btn_text']); ?>
+                </a>
+                <?php if (!empty($atts['btn2_link'])): ?>
+                <a href="<?php echo esc_url($atts['btn2_link']); ?>" class="sp-btn sp-btn--secondary sp-btn--lg" target="_blank" rel="nofollow sponsored noopener">
+                    <?php echo esc_html($atts['btn2_text']); ?>
+                </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('animated_hero', 'sp_animated_hero_shortcode');
+
+/**
+ * Add animated hero class to front page hero
+ */
+function sp_add_animated_hero_class() {
+    if (is_front_page()) {
+        ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var hero = document.querySelector('.sp-hero');
+                if (hero) {
+                    hero.classList.add('sp-hero--animated');
+                }
+            });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'sp_add_animated_hero_class');

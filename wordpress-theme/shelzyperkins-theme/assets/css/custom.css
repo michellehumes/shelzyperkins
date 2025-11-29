@@ -2017,6 +2017,720 @@ body.sp-dark-mode .sp-pros-cons__column--cons {
     font-weight: 500;
 }
 
+/* ==========================================================================
+   SALES CONVERSION ENHANCEMENTS
+   Visual improvements to increase engagement and sales
+   ========================================================================== */
+
+/* ==========================================================================
+   Animated Gradient Background for Hero
+   ========================================================================== */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.sp-hero--animated {
+    background: linear-gradient(-45deg, #FF6B6B, #FFE66D, #FF8A8A, #FFF0A0);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* ==========================================================================
+   Pulse Animation for CTAs
+   ========================================================================== */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: var(--sp-shadow-brand); }
+    50% { transform: scale(1.02); box-shadow: 0 8px 30px rgba(255, 107, 107, 0.5); }
+    100% { transform: scale(1); box-shadow: var(--sp-shadow-brand); }
+}
+
+.sp-btn--pulse {
+    animation: pulse 2s infinite;
+}
+
+.sp-btn--amazon:hover {
+    animation: none;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 153, 0, 0.4);
+}
+
+/* ==========================================================================
+   Urgency Countdown Timer
+   ========================================================================== */
+.sp-countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-spacing-md);
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+    color: var(--sp-white);
+    padding: var(--sp-spacing-lg);
+    border-radius: var(--sp-radius-lg);
+    margin: var(--sp-spacing-lg) 0;
+}
+
+.sp-countdown__label {
+    font-size: var(--sp-font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--sp-coral);
+}
+
+.sp-countdown__timer {
+    display: flex;
+    gap: var(--sp-spacing-sm);
+}
+
+.sp-countdown__block {
+    text-align: center;
+    min-width: 60px;
+}
+
+.sp-countdown__number {
+    display: block;
+    font-size: var(--sp-font-size-3xl);
+    font-weight: 700;
+    line-height: 1;
+    background: var(--sp-gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sp-countdown__unit {
+    font-size: var(--sp-font-size-xs);
+    opacity: 0.7;
+    text-transform: uppercase;
+}
+
+.sp-countdown__separator {
+    font-size: var(--sp-font-size-2xl);
+    font-weight: 700;
+    opacity: 0.5;
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   Trust Badges
+   ========================================================================== */
+.sp-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-spacing-lg);
+    padding: var(--sp-spacing-xl) 0;
+    border-top: 1px solid var(--sp-gray-lighter);
+    border-bottom: 1px solid var(--sp-gray-lighter);
+    margin: var(--sp-spacing-xl) 0;
+}
+
+.sp-trust-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-spacing-sm);
+    color: var(--sp-gray);
+    font-size: var(--sp-font-size-sm);
+}
+
+.sp-trust-badge svg {
+    width: 24px;
+    height: 24px;
+    color: var(--sp-success);
+}
+
+.sp-trust-badge--verified svg {
+    color: var(--sp-info);
+}
+
+.sp-trust-badge--secure svg {
+    color: var(--sp-success);
+}
+
+.sp-trust-badge--fast svg {
+    color: var(--sp-coral);
+}
+
+/* ==========================================================================
+   Floating Action Button for Best Deal
+   ========================================================================== */
+.sp-floating-deal {
+    position: fixed;
+    bottom: var(--sp-spacing-xl);
+    right: var(--sp-spacing-xl);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--sp-spacing-sm);
+}
+
+.sp-floating-deal__btn {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-spacing-sm);
+    background: var(--sp-gradient-brand);
+    color: var(--sp-white);
+    padding: var(--sp-spacing-md) var(--sp-spacing-lg);
+    border-radius: var(--sp-radius-full);
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--sp-shadow-lg);
+    transition: all var(--sp-transition-base);
+    animation: pulse 3s infinite;
+}
+
+.sp-floating-deal__btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(255, 107, 107, 0.5);
+    animation: none;
+    color: var(--sp-white);
+}
+
+.sp-floating-deal__icon {
+    font-size: 1.25em;
+}
+
+.sp-floating-deal__close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: var(--sp-charcoal);
+    color: var(--sp-white);
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 576px) {
+    .sp-floating-deal {
+        right: var(--sp-spacing-md);
+        bottom: 100px;
+    }
+}
+
+/* ==========================================================================
+   Enhanced Product Card Hover Effects
+   ========================================================================== */
+.sp-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.sp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--sp-gradient-brand);
+    opacity: 0;
+    z-index: 0;
+    transition: opacity var(--sp-transition-base);
+}
+
+.sp-card:hover::before {
+    opacity: 0.03;
+}
+
+.sp-card__image {
+    position: relative;
+    z-index: 1;
+}
+
+.sp-card__content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Shine effect on hover */
+.sp-card__image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: none;
+}
+
+.sp-card:hover .sp-card__image::after {
+    animation: shine 0.6s forwards;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* ==========================================================================
+   Savings Highlight Animation
+   ========================================================================== */
+@keyframes savingsPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.sp-card__savings {
+    animation: savingsPop 2s infinite;
+}
+
+.sp-card:hover .sp-card__savings {
+    animation: none;
+    transform: scale(1.15);
+    background: var(--sp-coral);
+    color: var(--sp-white);
+    padding: 4px 12px;
+    border-radius: var(--sp-radius-full);
+}
+
+/* ==========================================================================
+   Limited Time Banner
+   ========================================================================== */
+.sp-limited-banner {
+    background: linear-gradient(90deg, #FF6B6B, #FFE66D);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+    color: var(--sp-charcoal);
+    text-align: center;
+    padding: var(--sp-spacing-sm) var(--sp-spacing-md);
+    font-weight: 600;
+    font-size: var(--sp-font-size-sm);
+}
+
+.sp-limited-banner a {
+    color: var(--sp-charcoal);
+    text-decoration: underline;
+}
+
+.sp-limited-banner a:hover {
+    color: var(--sp-white);
+}
+
+/* ==========================================================================
+   Verified Purchase Badge
+   ========================================================================== */
+.sp-verified-purchase {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0, 184, 148, 0.1);
+    color: var(--sp-success);
+    padding: 4px 10px;
+    border-radius: var(--sp-radius-full);
+    font-size: var(--sp-font-size-xs);
+    font-weight: 600;
+}
+
+.sp-verified-purchase svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ==========================================================================
+   Social Proof Counter
+   ========================================================================== */
+.sp-social-proof {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-spacing-sm);
+    background: var(--sp-off-white);
+    padding: var(--sp-spacing-sm) var(--sp-spacing-md);
+    border-radius: var(--sp-radius-md);
+    font-size: var(--sp-font-size-sm);
+    margin: var(--sp-spacing-sm) 0;
+}
+
+.sp-social-proof__avatars {
+    display: flex;
+}
+
+.sp-social-proof__avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--sp-white);
+    margin-left: -8px;
+    background: var(--sp-gradient-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--sp-white);
+    font-weight: 600;
+}
+
+.sp-social-proof__avatar:first-child {
+    margin-left: 0;
+}
+
+.sp-social-proof__text {
+    color: var(--sp-gray);
+}
+
+.sp-social-proof__text strong {
+    color: var(--sp-charcoal);
+}
+
+/* ==========================================================================
+   Better Mobile Swipe Carousel
+   ========================================================================== */
+.sp-swipe-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: var(--sp-spacing-md);
+    padding: var(--sp-spacing-sm) 0 var(--sp-spacing-lg);
+}
+
+.sp-swipe-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.sp-swipe-carousel > * {
+    scroll-snap-align: start;
+    flex: 0 0 280px;
+}
+
+@media (max-width: 576px) {
+    .sp-swipe-carousel > * {
+        flex: 0 0 85%;
+    }
+}
+
+/* Scroll indicators */
+.sp-swipe-indicators {
+    display: flex;
+    justify-content: center;
+    gap: var(--sp-spacing-xs);
+    margin-top: var(--sp-spacing-md);
+}
+
+.sp-swipe-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sp-gray-lighter);
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-swipe-indicator.is-active {
+    background: var(--sp-coral);
+    width: 24px;
+    border-radius: var(--sp-radius-full);
+}
+
+/* ==========================================================================
+   Enhanced Quick Picks with Animation
+   ========================================================================== */
+.sp-quick-picks {
+    position: relative;
+    overflow: hidden;
+}
+
+.sp-quick-picks::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 60%);
+    animation: rotateGlow 10s linear infinite;
+}
+
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sp-quick-picks__item {
+    position: relative;
+    z-index: 1;
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-quick-picks__item:hover {
+    transform: translateX(8px);
+    box-shadow: var(--sp-shadow-md);
+}
+
+/* ==========================================================================
+   Sticky Add to Cart Bar (Mobile)
+   ========================================================================== */
+.sp-sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--sp-white);
+    padding: var(--sp-spacing-md);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: none;
+    transform: translateY(100%);
+    transition: transform var(--sp-transition-base);
+}
+
+.sp-sticky-cta.is-visible {
+    transform: translateY(0);
+}
+
+.sp-sticky-cta__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-spacing-md);
+    max-width: var(--sp-container-max);
+    margin: 0 auto;
+}
+
+.sp-sticky-cta__price {
+    font-size: var(--sp-font-size-lg);
+    font-weight: 700;
+    color: var(--sp-success);
+}
+
+.sp-sticky-cta__price-original {
+    font-size: var(--sp-font-size-sm);
+    color: var(--sp-gray-light);
+    text-decoration: line-through;
+    display: block;
+}
+
+.sp-sticky-cta__btn {
+    flex: 1;
+    max-width: 200px;
+}
+
+@media (max-width: 768px) {
+    .sp-sticky-cta {
+        display: block;
+    }
+}
+
+/* ==========================================================================
+   Flash Sale Animation
+   ========================================================================== */
+@keyframes flashSale {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.sp-flash-sale {
+    background: linear-gradient(135deg, #FF6B6B, #FF9900);
+    color: var(--sp-white);
+    padding: var(--sp-spacing-xs) var(--sp-spacing-sm);
+    border-radius: var(--sp-radius-sm);
+    font-weight: 700;
+    font-size: var(--sp-font-size-xs);
+    text-transform: uppercase;
+    animation: flashSale 1s infinite;
+}
+
+/* ==========================================================================
+   Review Stars Animation
+   ========================================================================== */
+.sp-stars {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.sp-star {
+    color: var(--sp-gray-lighter);
+    transition: all var(--sp-transition-fast);
+}
+
+.sp-star--filled {
+    color: #FFD700;
+}
+
+.sp-card:hover .sp-star--filled {
+    transform: scale(1.1);
+}
+
+/* Staggered animation */
+.sp-card:hover .sp-star--filled:nth-child(1) { transition-delay: 0.05s; }
+.sp-card:hover .sp-star--filled:nth-child(2) { transition-delay: 0.1s; }
+.sp-card:hover .sp-star--filled:nth-child(3) { transition-delay: 0.15s; }
+.sp-card:hover .sp-star--filled:nth-child(4) { transition-delay: 0.2s; }
+.sp-card:hover .sp-star--filled:nth-child(5) { transition-delay: 0.25s; }
+
+/* ==========================================================================
+   Better Price Display
+   ========================================================================== */
+.sp-price-display {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-spacing-sm);
+}
+
+.sp-price-display__current {
+    font-size: var(--sp-font-size-2xl);
+    font-weight: 700;
+    color: var(--sp-success);
+}
+
+.sp-price-display__original {
+    font-size: var(--sp-font-size-base);
+    color: var(--sp-gray-light);
+    text-decoration: line-through;
+}
+
+.sp-price-display__savings {
+    font-size: var(--sp-font-size-sm);
+    font-weight: 600;
+    color: var(--sp-coral);
+    background: rgba(255, 107, 107, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--sp-radius-full);
+}
+
+/* ==========================================================================
+   Newsletter with Animation
+   ========================================================================== */
+.sp-email-signup--animated {
+    position: relative;
+    overflow: hidden;
+}
+
+.sp-email-signup--animated::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%
+    );
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* ==========================================================================
+   Category Card Improvements
+   ========================================================================== */
+.sp-category-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.sp-category-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sp-gradient-brand);
+    transform: scaleX(0);
+    transition: transform var(--sp-transition-base);
+}
+
+.sp-category-card:hover::before {
+    transform: scaleX(1);
+}
+
+.sp-category-card__icon {
+    transition: transform var(--sp-transition-base);
+}
+
+.sp-category-card:hover .sp-category-card__icon {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+/* ==========================================================================
+   Better Loading States
+   ========================================================================== */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.sp-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--sp-gray-lighter) 25%,
+        var(--sp-off-white) 50%,
+        var(--sp-gray-lighter) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--sp-radius-md);
+}
+
+.sp-skeleton--text {
+    height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.sp-skeleton--image {
+    aspect-ratio: 1;
+}
+
+.sp-skeleton--button {
+    height: 44px;
+    width: 120px;
+}
+
+/* ==========================================================================
+   Accessibility Improvements
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus visible styles */
+.sp-btn:focus-visible,
+.sp-card:focus-visible,
+.sp-nav__link:focus-visible {
+    outline: 3px solid var(--sp-coral);
+    outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .sp-btn--primary {
+        background: var(--sp-coral);
+        border: 2px solid currentColor;
+    }
+    
+    .sp-card {
+        border: 2px solid var(--sp-charcoal);
+    }
+}
+
 .sp-prices-verified svg {
     width: 14px;
     height: 14px;
