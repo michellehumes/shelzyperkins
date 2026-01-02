@@ -1,0 +1,23 @@
+{
+  "current_scores": {
+    "Health & Fitness": 6,
+    "Career & Business": 7,
+    "Finances": 5,
+    "Relationships": 7,
+    "Personal Growth": 8,
+    "Fun & Recreation": 4,
+    "Physical Environment": 6,
+    "Contribution": 5
+  },
+  "target_scores": {
+    "Health & Fitness": 8,
+    "Career & Business": 9,
+    "Finances": 8,
+    "Relationships": 8,
+    "Personal Growth": 9,
+    "Fun & Recreation": 7,
+    "Physical Environment": 7,
+    "Contribution": 7
+  },
+  "last_updated": "2026-01-02"
+}

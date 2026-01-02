@@ -1,0 +1,67 @@
+{
+  "inbox": [
+    {
+      "id": 1,
+      "title": "Research new affiliate products",
+      "priority": "high",
+      "due": null
+    },
+    {
+      "id": 2,
+      "title": "Update Pinterest automation",
+      "priority": "medium",
+      "due": null
+    }
+  ],
+  "today": [
+    {
+      "id": 3,
+      "title": "Write blog post on kitchen gadgets",
+      "priority": "high",
+      "due": "2026-01-02",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "title": "Check affiliate dashboard",
+      "priority": "medium",
+      "due": "2026-01-02",
+      "completed": true
+    },
+    {
+      "id": 5,
+      "title": "Respond to reader comments",
+      "priority": "low",
+      "due": "2026-01-02",
+      "completed": false
+    }
+  ],
+  "upcoming": [
+    {
+      "id": 6,
+      "title": "Quarterly content planning",
+      "priority": "high",
+      "due": "2026-01-05"
+    },
+    {
+      "id": 7,
+      "title": "Update SEO for top 10 posts",
+      "priority": "medium",
+      "due": "2026-01-10"
+    }
+  ],
+  "someday": [
+    {
+      "id": 8,
+      "title": "Launch YouTube channel",
+      "priority": "low",
+      "due": null
+    },
+    {
+      "id": 9,
+      "title": "Create digital product",
+      "priority": "medium",
+      "due": null
+    }
+  ]
+}

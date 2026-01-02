@@ -1,0 +1,53 @@
+{
+  "habits": [
+    {
+      "id": 1,
+      "name": "Morning routine",
+      "frequency": "daily",
+      "streak": 5,
+      "best_streak": 12,
+      "completed_today": true
+    },
+    {
+      "id": 2,
+      "name": "Write 500 words",
+      "frequency": "daily",
+      "streak": 3,
+      "best_streak": 21,
+      "completed_today": false
+    },
+    {
+      "id": 3,
+      "name": "Exercise",
+      "frequency": "daily",
+      "streak": 0,
+      "best_streak": 30,
+      "completed_today": false
+    },
+    {
+      "id": 4,
+      "name": "Read 30 minutes",
+      "frequency": "daily",
+      "streak": 7,
+      "best_streak": 45,
+      "completed_today": true
+    },
+    {
+      "id": 5,
+      "name": "Weekly review",
+      "frequency": "weekly",
+      "streak": 4,
+      "best_streak": 8,
+      "completed_today": false
+    },
+    {
+      "id": 6,
+      "name": "Publish blog post",
+      "frequency": "weekly",
+      "streak": 2,
+      "best_streak": 6,
+      "completed_today": false
+    }
+  ],
+  "log": {}
+}
