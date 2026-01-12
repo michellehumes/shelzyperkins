@@ -68,9 +68,9 @@ jobs:
             ('Kitchen Must-Haves for Meal Prep', 'meal prep essentials', 'kitchen'),
           ]
           title, keyword, niche = random.choice(topics)
-          print(f'TITLE={title}')
-          print(f'KEYWORD={keyword}')
-          print(f'NICHE={niche}')
+          print(f'TITLE=\"{title}\"')
+          print(f'KEYWORD=\"{keyword}\"')
+          print(f'NICHE=\"{niche}\"')
           " > /tmp/topic.txt
 
           source /tmp/topic.txt
