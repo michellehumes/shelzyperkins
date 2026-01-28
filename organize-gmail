@@ -1,0 +1,30 @@
+#!/bin/bash
+# Gmail Organizer - Quick Launch Script
+# Usage: ./organize-gmail [options]
+
+cd "$(dirname "$0")"
+
+# Check if credentials exist
+if [ ! -f "credentials.json" ]; then
+    echo "⚠️  credentials.json not found!"
+    echo ""
+    echo "Please follow these steps:"
+    echo "1. Go to https://console.cloud.google.com/"
+    echo "2. Enable Gmail API"
+    echo "3. Create OAuth credentials"
+    echo "4. Download and save as credentials.json"
+    echo ""
+    echo "See GMAIL_ORGANIZER_SETUP.md for detailed instructions"
+    exit 1
+fi
+
+# Check if dependencies are installed
+if ! python3 -c "import googleapiclient" 2>/dev/null; then
+    echo "📦 Installing dependencies..."
+    pip install -r gmail_requirements.txt
+fi
+
+# Run the organizer
+echo "🚀 Launching Gmail Organizer..."
+echo ""
+python3 gmail_organizer.py "$@"
