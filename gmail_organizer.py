@@ -7,6 +7,9 @@ Automatically organize your Gmail inbox with smart labels and archiving.
 import os
 import pickle
 import re
+
+# Allow OAuth over localhost (desktop/development use only)
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Dict, Optional
@@ -102,9 +105,31 @@ class GmailOrganizer:
                         f"Credentials file not found: {self.credentials_path}\n"
                         "Please download OAuth credentials from Google Cloud Console."
                     )
+                import webbrowser
+                has_browser = True
+                try:
+                    webbrowser.get()
+                except webbrowser.Error:
+                    has_browser = False
+
                 flow = InstalledAppFlow.from_client_secrets_file(
                     self.credentials_path, SCOPES)
-                creds = flow.run_local_server(port=0)
+
+                if has_browser:
+                    creds = flow.run_local_server(port=0)
+                else:
+                    # Headless: print URL, user pastes back the code
+                    auth_url, state = flow.authorization_url(
+                        access_type='offline',
+                        prompt='consent'
+                    )
+                    print("\n🌐 Open this URL in your browser:")
+                    print(f"\n  {auth_url}\n")
+                    print("After granting access, copy the FULL redirect URL")
+                    print("(it will look like: http://localhost:PORT/?code=...&state=...)")
+                    redirect_url = input("\nPaste redirect URL here: ").strip()
+                    flow.fetch_token(authorization_response=redirect_url)
+                    creds = flow.credentials
 
             # Save credentials
             with open(self.token_path, 'wb') as token:
