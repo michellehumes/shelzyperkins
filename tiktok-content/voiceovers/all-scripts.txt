@@ -1,0 +1,89 @@
+# ALL AI VOICEOVER SCRIPTS
+# Copy-paste these directly into CapCut TTS or ElevenLabs
+
+================================================================================
+VIDEO 1: TUTORIAL
+================================================================================
+
+Okay so everyone keeps asking how I make these personalized water bottles, so here's your tutorial. First, download the Pecita font from dafont.com — it's free. Open Canva or Cricut Design Space, type your name, size it to about two inches tall, and send it to your Cricut. Use permanent outdoor vinyl so it's dishwasher safe. That's literally it.
+
+================================================================================
+VIDEO 2: SUPPLIES
+================================================================================
+
+Here's everything you need. Number one: white flip-top water bottle from Amazon, twelve dollars. Number two: permanent outdoor vinyl, I use Cricut brand but any works. Number three: transfer tape. Number four: weeding tools. And obviously a Cricut. Total cost per bottle is around fifteen dollars, and you can sell them for thirty-five to forty-five. The math is mathing.
+
+================================================================================
+VIDEO 3: ASMR
+================================================================================
+
+[NO VOICEOVER - Use original Cricut sounds or lo-fi music]
+
+================================================================================
+VIDEO 4: MEME
+================================================================================
+
+[Use TikTok's built-in Text-to-Speech, have it read:]
+
+if no one got me... i know my... personalized script water bottle... got me
+
+================================================================================
+VIDEO 5: PRODUCT REVEAL
+================================================================================
+
+New bombshells are entering the villa. Introducing Sarah, Jess, Emma, Liv, and Bella.
+
+================================================================================
+VIDEO 6: WEEDING TUTORIAL
+================================================================================
+
+Weeding is honestly so therapeutic once you get the hang of it. The key is to go slow, especially on the cursive letters. Then apply your transfer tape and smooth it down really well. Line it up on your bottle, burnish it down with a scraper or even a credit card works, and then the best part — peel it back slowly. And just like that, you've got a custom water bottle.
+
+================================================================================
+VIDEO 7: SMALL BUSINESS
+================================================================================
+
+Here's everything I made this week. Twelve personalized water bottles going out to their new homes. Never thought making custom bottles would become my side hustle but here we are. Small business check.
+
+================================================================================
+VIDEO 8: COLOR POLL
+================================================================================
+
+Hot pink for the bold ones. Baby pink for soft girl era. Gold if you're giving main character energy. Rose gold for the hopeless romantics. Teal for the creative souls. And black for the mysterious ones. Comment your color.
+
+================================================================================
+VIDEO 9: REPLY TO COMMENT
+================================================================================
+
+Yes I am! I make custom personalized water bottles starting at twenty-five dollars. You pick your name, pick your vinyl color — I have hot pink, baby pink, gold, rose gold, teal, and black — and I ship within three to five days. Just DM me with your name and color and I'll get you all set up.
+
+================================================================================
+VIDEO 10: POV
+================================================================================
+
+When you take the watch party theme a little too seriously... no regrets.
+
+================================================================================
+ELEVENLABS VOICE RECOMMENDATIONS
+================================================================================
+
+Best voices for this content:
+- "Rachel" - Friendly, casual, young female
+- "Bella" - Warm, conversational
+- "Elli" - Cheerful, energetic
+
+Settings:
+- Stability: 50%
+- Similarity: 75%
+- Style: 0%
+
+================================================================================
+CAPCUT TTS VOICE RECOMMENDATIONS
+================================================================================
+
+Best voices:
+- "Jessie" - Natural female voice
+- "en-US-Female-1" - Clear, friendly
+- "Ashley" - Casual, relatable
+
+================================================================================
