@@ -166,3 +166,5 @@ vite.config.ts.timestamp-*
 
 # Automation generated output
 automation/output/
+venv/
+token.pickle
