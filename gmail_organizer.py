@@ -106,6 +106,9 @@ class GmailOrganizer:
                         "Please download OAuth credentials from Google Cloud Console."
                     )
                 import webbrowser
+                import http.server
+                import urllib.parse
+
                 has_browser = True
                 try:
                     webbrowser.get()
@@ -118,19 +121,44 @@ class GmailOrganizer:
                 if has_browser:
                     creds = flow.run_local_server(port=0)
                 else:
-                    # Headless: explicit redirect_uri so Google doesn't reject the request
-                    redirect_uri = 'http://localhost:8080'
-                    flow.redirect_uri = redirect_uri
-                    auth_url, state = flow.authorization_url(
+                    # Headless: spin up a tiny server to catch the callback
+                    port = 8080
+                    flow.redirect_uri = f'http://localhost:{port}'
+                    auth_url, _ = flow.authorization_url(
                         access_type='offline',
                         prompt='consent'
                     )
-                    print("\n🌐 Open this URL in your browser:")
-                    print(f"\n  {auth_url}\n")
-                    print("Sign in, grant access, then copy the URL your browser")
-                    print("lands on (it will show http://localhost:8080/?code=...)")
-                    redirect_response = input("\nPaste that URL here: ").strip()
-                    flow.fetch_token(authorization_response=redirect_response)
+
+                    # Capture the callback path from Google's redirect
+                    callback_path = [None]
+
+                    class _AuthHandler(http.server.BaseHTTPRequestHandler):
+                        def do_GET(self_handler):
+                            callback_path[0] = self_handler.path
+                            self_handler.send_response(200)
+                            self_handler.send_header('Content-Type', 'text/html')
+                            self_handler.end_headers()
+                            self_handler.wfile.write(
+                                b'<h1>Access granted</h1>'
+                                b'<p>You can close this tab.</p>'
+                            )
+
+                        def log_message(self_handler, format, *args):
+                            pass  # suppress server logs
+
+                    server = http.server.HTTPServer(('localhost', port), _AuthHandler)
+
+                    print("\n🌐 Open this URL in your browser:\n")
+                    print(f"  {auth_url}\n")
+                    print(f"Sign in, grant access — this window will pick it up.")
+                    print("Waiting...\n")
+
+                    server.handle_request()  # blocks until Google redirects back
+                    server.server_close()
+
+                    flow.fetch_token(
+                        authorization_response=f'http://localhost:{port}{callback_path[0]}'
+                    )
                     creds = flow.credentials
 
             # Save credentials
