@@ -1,0 +1,105 @@
+name: Generate Weekly TikTok Content
+
+on:
+  schedule:
+    # Run every Sunday at 6 AM EST (11 AM UTC)
+    - cron: '0 11 * * 0'
+  workflow_dispatch:
+    inputs:
+      video_count:
+        description: 'Number of video scripts to generate'
+        required: false
+        default: '7'
+      start_number:
+        description: 'Starting video number'
+        required: false
+        default: '21'
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Get next video number
+        id: video_number
+        run: |
+          # Find highest existing video number
+          HIGHEST=$(ls tiktok-content/video-scripts/video-*.md 2>/dev/null | sed 's/.*video-\([0-9]*\).*/\1/' | sort -n | tail -1)
+          if [ -z "$HIGHEST" ]; then
+            HIGHEST=20
+          fi
+          NEXT=$((HIGHEST + 1))
+          echo "start=$NEXT" >> $GITHUB_OUTPUT
+
+      - name: Generate video scripts
+        run: |
+          cd tiktok-content
+          VIDEO_COUNT=${{ github.event.inputs.video_count || '7' }}
+          START_NUM=${{ steps.video_number.outputs.start }}
+
+          python3 tiktok_generator.py --type batch --count $VIDEO_COUNT --start $START_NUM --output video-scripts/
+
+          echo "Generated $VIDEO_COUNT new video scripts starting from video $START_NUM"
+
+      - name: Generate weekly calendar
+        run: |
+          cd tiktok-content
+          WEEK_DATE=${{ steps.date.outputs.date }}
+
+          python3 tiktok_generator.py --type calendar --count 7 --output schedule/ --week-start "$WEEK_DATE"
+
+      - name: Update captions file
+        run: |
+          cd tiktok-content
+          python3 tiktok_generator.py --type captions --output captions/
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add tiktok-content/
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "🎬 Auto-generate weekly TikTok content for ${{ steps.date.outputs.date }}
+
+          Generated:
+          - 7 new video scripts
+          - Updated weekly calendar
+          - Updated captions file
+
+          Run by GitHub Actions"
+
+          git push
+
+      - name: Summary
+        run: |
+          echo "## TikTok Content Generated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** ${{ steps.date.outputs.date }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**New videos:**" >> $GITHUB_STEP_SUMMARY
+          ls -la tiktok-content/video-scripts/*.md | tail -7 >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Your content for this week is ready!" >> $GITHUB_STEP_SUMMARY
