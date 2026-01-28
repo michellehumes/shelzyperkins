@@ -118,17 +118,19 @@ class GmailOrganizer:
                 if has_browser:
                     creds = flow.run_local_server(port=0)
                 else:
-                    # Headless: print URL, user pastes back the code
+                    # Headless: explicit redirect_uri so Google doesn't reject the request
+                    redirect_uri = 'http://localhost:8080'
+                    flow.redirect_uri = redirect_uri
                     auth_url, state = flow.authorization_url(
                         access_type='offline',
                         prompt='consent'
                     )
                     print("\n🌐 Open this URL in your browser:")
                     print(f"\n  {auth_url}\n")
-                    print("After granting access, copy the FULL redirect URL")
-                    print("(it will look like: http://localhost:PORT/?code=...&state=...)")
-                    redirect_url = input("\nPaste redirect URL here: ").strip()
-                    flow.fetch_token(authorization_response=redirect_url)
+                    print("Sign in, grant access, then copy the URL your browser")
+                    print("lands on (it will show http://localhost:8080/?code=...)")
+                    redirect_response = input("\nPaste that URL here: ").strip()
+                    flow.fetch_token(authorization_response=redirect_response)
                     creds = flow.credentials
 
             # Save credentials
