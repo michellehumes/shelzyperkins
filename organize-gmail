@@ -4,24 +4,30 @@
 
 cd "$(dirname "$0")"
 
+# Set up virtual environment if missing
+if [ ! -d "venv" ]; then
+    echo "📦 Creating virtual environment..."
+    python3 -m venv venv
+    echo "📦 Installing dependencies..."
+    ./venv/bin/pip install -r gmail_requirements.txt
+fi
+
+# Activate venv
+source venv/bin/activate
+
 # Check if credentials exist
 if [ ! -f "credentials.json" ]; then
     echo "⚠️  credentials.json not found!"
     echo ""
     echo "Please follow these steps:"
-    echo "1. Go to https://console.cloud.google.com/"
-    echo "2. Enable Gmail API"
-    echo "3. Create OAuth credentials"
-    echo "4. Download and save as credentials.json"
+    echo "  1. Go to https://console.cloud.google.com/"
+    echo "  2. Create a project (or select an existing one)"
+    echo "  3. Enable the Gmail API"
+    echo "  4. Create an OAuth 2.0 Client ID (Desktop app)"
+    echo "  5. Download and save as credentials.json here"
     echo ""
     echo "See GMAIL_ORGANIZER_SETUP.md for detailed instructions"
     exit 1
-fi
-
-# Check if dependencies are installed
-if ! python3 -c "import googleapiclient" 2>/dev/null; then
-    echo "📦 Installing dependencies..."
-    pip install -r gmail_requirements.txt
 fi
 
 # Run the organizer
